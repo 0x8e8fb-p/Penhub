@@ -1,8 +1,8 @@
 PenHub - Pentesting Commands & Toolkit
 
-https://img.shields.io/badge/PenHub-Pentesting_Toolkit-red
-https://img.shields.io/badge/License-MIT-blue
-https://img.shields.io/badge/Platform-Web-brightgreen
+![PenHub - Pentesting Toolkit](https://img.shields.io/badge/PenHub-Pentesting_Toolkit-red)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue)
+![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
 PenHub is a comprehensive, web-based pentesting toolkit designed for penetration testers, security researchers, and CTF players. This all-in-one interface provides quick access to commonly used commands, post-exploitation techniques, payload generation, and network pivoting tools - all from a single, intuitive dashboard.
 🌟 Features
