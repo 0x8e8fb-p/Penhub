@@ -5,7 +5,8 @@
 ![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
 PenHub is a comprehensive, web-based pentesting toolkit designed for penetration testers, security researchers, and CTF players. This all-in-one interface provides quick access to commonly used commands, post-exploitation techniques, payload generation, and network pivoting tools - all from a single, intuitive dashboard.
-🌟 Features
+
+# 🌟 Features
 1. Commands Generator
 
     Live Command Templates: Dynamic generation of pentesting commands with customizable parameters
