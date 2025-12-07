@@ -1,4 +1,4 @@
-PenHub - Pentesting Commands & Toolkit
+# PenHub - Pentesting Commands & Toolkit
 
 ![PenHub - Pentesting Toolkit](https://img.shields.io/badge/PenHub-Pentesting_Toolkit-red)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
