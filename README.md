@@ -1,23 +1,26 @@
-# PenHub - Pentesting Commands & Toolkit
+# PenHub - Web-Based Pentesting Toolkit
 
 ![PenHub - Pentesting Toolkit](https://img.shields.io/badge/PenHub-Pentesting_Toolkit-red)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 ![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
-PenHub is a comprehensive, web-based pentesting toolkit designed for penetration testers, security researchers, and CTF players. This all-in-one interface provides quick access to commonly used commands, post-exploitation techniques, payload generation, and network pivoting tools - all from a single, intuitive dashboard.
+PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools—all without requiring local installation or dependencies.
+🚀 Live Access
 
-# 🌟 Features
-1. Commands Generator
+Access PenHub immediately at: https://penhub.netlify.app
 
-    Live Command Templates: Dynamic generation of pentesting commands with customizable parameters
+# 🌟 Core Features
+1. Interactive Commands Generator
 
-    Tool Coverage:
+    Dynamic Command Templates: Real-time generation of penetration testing commands with customizable parameters
 
-        Nmap scanning techniques
+    Comprehensive Tool Coverage:
 
-        Directory busting (Gobuster, Feroxbuster)
+        Network scanning (Nmap)
 
-        Vulnerability scanning (Nuclei, Nikto)
+        Directory/enumeration tools (Gobuster, Feroxbuster)
+
+        Vulnerability scanners (Nuclei, Nikto)
 
         Password attacks (Hydra, John, Hashcat)
 
@@ -27,29 +30,33 @@ PenHub is a comprehensive, web-based pentesting toolkit designed for penetration
 
         File transfer methods
 
-    Smart Parameter System: Fill once, update all commands automatically
+    Smart Parameter System: Configure once, automatically updates all related commands
 
-    One-click Copy: Copy commands directly to clipboard
+    One-Click Copy: Direct clipboard integration for immediate use
 
 2. Post-Exploitation Cheatsheet
 
-    Dual-Platform Coverage: Extensive Linux & Windows post-exploitation techniques
+    Dual-Platform Coverage: Extensive Linux and Windows post-exploitation techniques
 
-    Systematic Enumeration: Step-by-step system reconnaissance
+    Systematic Methodology:
 
-    Privilege Escalation: SUID/SGID, sudo exploits, kernel vulnerabilities, Windows privilege abuses
+        Step-by-step system reconnaissance
 
-    Credential Hunting: Password extraction, hash dumping, credential discovery
+        Privilege escalation (SUID/SGID, sudo exploits, kernel vulnerabilities)
 
-    File Transfer Methods: Multiple upload/download techniques for both platforms
+        Credential discovery and extraction
 
-    Persistence Techniques: Maintaining access after compromise
+        File transfer techniques
 
-    Search Functionality: Quick search across all commands and techniques
+        Persistence mechanisms
+
+    Intelligent Search: Quick filtering across all commands and techniques
+
+    Platform Toggle: Seamlessly switch between Linux and Windows environments
 
 3. Image Payload Generator
 
-    Stealthy Payloads: Embed malicious code within image files
+    Stealthy Payload Delivery: Embed malicious code within legitimate image files
 
     Multiple Payload Types:
 
@@ -63,100 +70,45 @@ PenHub is a comprehensive, web-based pentesting toolkit designed for penetration
 
     File Format Support: JPG, PNG, GIF, BMP
 
-    Technique Documentation: File extension bypass, magic bytes, polyglot files
+    Technique Documentation: Includes file extension bypass, magic bytes manipulation, and polyglot file creation
 
 4. Port Forwarding & Pivoting Toolkit
 
     Multi-Tool Support: Ligolo-ng, Chisel, SSH tunneling, Socat
 
-    Visual Configuration: Interactive parameter setup
+    Visual Configuration: Interactive parameter setup with network diagrams
 
     Step-by-Step Guides: Complete setup instructions for each tool
 
-    Network Diagrams: Visual representation of pivoting flows
+    Real-time Command Generation: Commands update dynamically as you configure parameters
 
-    Real-time Command Generation: Commands update as you configure parameters
+    Network Flow Visualization: Clear representations of pivoting scenarios
 
-🚀 Quick Start
-Option 1: Local Deployment
+📋 Quick Start
+Option 1: Use the Hosted Version (Recommended)
+
+Simply visit https://penhub.netlify.app in any modern web browser.
+Option 2: Local Deployment
 bash
 
 # Clone the repository
-git clone https://github.com/yourusername/penhub.git
+git clone https://github.com/0x8e8fb-p/Penhub.git
 
-# Navigate to directory
+# Navigate to the directory
 cd penhub
 
-# Open in browser (any modern web browser)
-# Simply open index.html in your preferred browser
+# Open in your browser
+# Simply open index.html with any modern web browser
 
-Option 2: Direct File Access
+Option 3: Direct File Access
 
-Since PenHub is built with pure HTML, CSS, and JavaScript, you can:
+    Download the ZIP file from GitHub
 
-    Download the ZIP file and extract
+    Extract to your preferred location
 
-    Open index.html directly in any modern web browser
+    Open index.html in any modern web browser
 
-    No server or dependencies required!
-
-Option 3: Hosted Version
-
-Visit https://0x8e8fb.github.io/penhub for the live version (if hosted).
-🛠️ Tool Structure
-text
-
-penhub/
-│
-├── index.html              # Main application interface
-├── notes.html             # Private notes system
-├── payload.html           # Image payload generator
-├── pivot.html            # Port forwarding & pivoting toolkit
-│
-├── (All functionality is contained in single HTML files)
-│
-└── README.md              # This documentation
-
-📋 Usage Guide
-Commands Page
-
-    Configure Parameters: Enter target IP, ports, usernames, etc. in the sidebar
-
-    Browse Categories: Expand different tool sections (Nmap, Gobuster, Hydra, etc.)
-
-    Copy Commands: Click the "copy" button on any command to copy to clipboard
-
-    Customize Tools: Adjust advanced parameters for tools like Nuclei, SQLMap, Feroxbuster
-
-Post-Exploitation Cheatsheet
-
-    Search Function: Use the search bar to find specific techniques
-
-    Quick Links: Jump to common sections (PrivEsc, Enum, File Transfer)
-
-    Platform Toggle: Switch between Linux and Windows techniques
-
-    Expand/Collapse: Toggle sections for focused reading
-
-Image Payload Generator
-
-    Select Payload Type: Choose reverse shell, command execution, or custom
-
-    Configure Parameters: Set LHOST, LPORT, or custom commands
-
-    Generate Payload: Create malicious image with embedded PHP code
-
-    Download: Get the malicious image or standalone PHP payload
-
-Pivoting Toolkit
-
-    Configure Network: Set attacker IP, target IP, ports
-
-    Choose Tool: Select between Ligolo-ng, Chisel, SSH, or Socat
-
-    Follow Steps: Use the step-by-step guides for each tool
-
-    Copy Commands: Get ready-to-use commands for your scenario
+    No server, dependencies, or installation required
 
 🎯 Target Audience
 
@@ -170,46 +122,51 @@ Pivoting Toolkit
 
     Red Teamers: All-in-one toolkit for operational workflows
 
+    Security Educators: Teaching tool for penetration testing methodologies
+
 🔒 Legal & Ethical Use
 
-IMPORTANT: PenHub is designed for:
+IMPORTANT: PenHub is designed strictly for:
 
-    Authorized security assessments
+    ✅ Authorized security assessments and penetration tests
 
-    CTF competitions and hacking challenges
+    ✅ CTF competitions and legal hacking challenges
 
-    Educational purposes in controlled environments
+    ✅ Educational purposes in controlled environments
 
-    Security research with proper authorization
+    ✅ Security research with proper authorization
 
-DO NOT USE for:
+    ✅ Improving defensive security postures
 
-    Unauthorized penetration testing
+STRICTLY PROHIBITED:
 
-    Illegal hacking activities
+    ❌ Unauthorized penetration testing
 
-    Malicious attacks against systems you don't own
+    ❌ Illegal hacking activities
 
-    Violating laws or terms of service
+    ❌ Attacks against systems without explicit permission
 
-The author assumes no responsibility for misuse of this tool. Always obtain proper authorization before testing any system.
-🧩 Integration with Existing Workflows
-With Your Kali/Parrot OS
-bash
+    ❌ Violating laws, regulations, or terms of service
 
-# Bookmark PenHub in your browser for quick access
-# Use alongside tools like Burp Suite, Metasploit, CrackMapExec
-# Reference during engagements without leaving your workflow
+Disclaimer: The author assumes no responsibility for misuse of this tool. Always obtain proper written authorization before testing any system. Users are solely responsible for ensuring their activities comply with applicable laws and regulations.
+🧩 Integration with Workflows
+With Your Security Environment
 
-With Note-taking Tools
+    Bookmark PenHub in your browser for quick access during engagements
+
+    Use alongside professional tools like Burp Suite, Metasploit, and CrackMapExec
+
+    Reference during assessments without disrupting your workflow
+
+With Note-taking Systems
 
     Export commands to tools like CherryTree, Obsidian, or OneNote
 
-    Use as a quick reference while taking screenshots and notes
+    Use as a quick reference while documenting findings
 
     Template for standardized engagement reporting
 
-📚 Learning Resources
+📚 Learning Pathways
 For Beginners
 
     Start with the Commands Generator to learn basic tool syntax
@@ -222,47 +179,57 @@ For Beginners
 
 For Advanced Users
 
-    Customize the tool by modifying the HTML/JS for your workflow
+    Customize the interface for your specific workflow
 
     Add your own command templates and techniques
 
-    Integrate with your existing toolset and scripts
+    Integrate with existing toolchains and automation scripts
 
-    Use as a teaching tool for junior team members
+    Use as a training resource for team members
 
-🐛 Common Issues & Troubleshooting
-JavaScript Not Working
+🐛 Troubleshooting
+Common Issues
 
-    Ensure JavaScript is enabled in your browser
+    JavaScript Not Working: Ensure JavaScript is enabled in your browser settings
 
-    Check browser console for errors (F12 → Console)
+    Commands Not Updating: Refresh the page and ensure all required fields are filled
 
-    Try a different browser (Chrome/Firefox recommended)
+    Layout Issues: Use Chrome 80+, Firefox 75+, or Edge 80+ for optimal experience
 
-Commands Not Updating
+    Mobile Experience: Desktop browsers recommended for full functionality
 
-    Refresh the page to reset all parameters
+Browser Compatibility
 
-    Check that all required fields are filled
+    ✅ Google Chrome (Recommended)
 
-    Ensure no ad-blockers are interfering with scripts
+    ✅ Mozilla Firefox
 
-Layout Issues
+    ✅ Microsoft Edge
 
-    Browser zoom should be at 100% for optimal display
+    ✅ Safari (Limited testing)
 
-    Use recommended browsers: Chrome 80+, Firefox 75+, Edge 80+
+    ❌ Internet Explorer (Not supported)
 
-    Mobile devices have limited support (use desktop for full features)
+🔄 Updates & Roadmap
+Current Version: v1.0
 
-🔄 Updates & Maintenance
-Version History
+    Initial release with core functionality
 
-    v1.0 (Current): Initial release with core functionality
+    Four main modules: Commands, Cheatsheet, Payloads, Pivoting
 
-    Planned: More tools, export features, dark/light mode toggle
+Planned Features
 
-Contributing
+    Dark/Light mode toggle
+
+    Export functionality for reports
+
+    Additional tool integrations
+
+    Community command contributions
+
+    Offline PWA capabilities
+
+🤝 Contributing
 
 Contributions are welcome! Please:
 
@@ -272,7 +239,7 @@ Contributions are welcome! Please:
 
     Submit a pull request with clear description
 
-    Follow the existing code style
+    Follow existing code and documentation styles
 
 Reporting Issues
 
@@ -282,32 +249,36 @@ Use GitHub Issues to report:
 
     Missing tools or techniques
 
-    Security vulnerabilities (responsibly)
+    Security vulnerabilities (responsibly disclosed)
 
-    Feature requests
+    Feature requests and suggestions
 
 📞 Support & Community
 
-    GitHub Issues: For technical problems and feature requests
+    Live Application: https://penhub.netlify.app
 
-    Buy Me a Coffee: Support development at buymeacoffee.com/0x8e8fb
+    GitHub Repository: https://github.com/0x8e8fb/penhub
 
-    Twitter: Follow @0x8e8fb for updates
+    Issue Tracking: GitHub Issues for technical problems
+
+    Support Development: Buy Me a Coffee
 
 🙏 Acknowledgments
 
-    Inspired by various pentesting cheatsheets and tools
+    Inspired by various pentesting cheatsheets and community resources
 
-    Community contributions from security researchers worldwide
+    Contributions from security researchers worldwide
 
-    Special thanks to tool developers (Nmap, Gobuster, Nuclei, etc.)
+    Special thanks to open-source tool developers (Nmap, Gobuster, Nuclei, etc.)
 
     OSCP/PNPT community for methodology and techniques
 
+    Everyone who tests, uses, and provides feedback
+
 📄 License
 
-MIT License - See LICENSE file for details.
-
-Disclaimer: This tool is for educational and authorized testing purposes only. The author is not responsible for any misuse or damage caused by this tool. Always follow ethical guidelines and obtain proper authorization before penetration testing.
+MIT License - See LICENSE file for complete details.
 
 Built with ❤️ by 0x8e8fb for the security community
+
+Remember: With great power comes great responsibility. Always hack ethically.
