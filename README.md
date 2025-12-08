@@ -84,32 +84,6 @@ Access PenHub immediately at: https://penhub.netlify.app
 
     Network Flow Visualization: Clear representations of pivoting scenarios
 
-📋 Quick Start
-Option 1: Use the Hosted Version (Recommended)
-
-Simply visit https://penhub.netlify.app in any modern web browser.
-Option 2: Local Deployment
-bash
-
-# Clone the repository
-git clone https://github.com/0x8e8fb-p/Penhub.git
-
-# Navigate to the directory
-cd penhub
-
-# Open in your browser
-# Simply open index.html with any modern web browser
-
-Option 3: Direct File Access
-
-    Download the ZIP file from GitHub
-
-    Extract to your preferred location
-
-    Open index.html in any modern web browser
-
-    No server, dependencies, or installation required
-
 🎯 Target Audience
 
     Penetration Testers: Quick reference for common commands during engagements
@@ -135,8 +109,6 @@ IMPORTANT: PenHub is designed strictly for:
     ✅ Educational purposes in controlled environments
 
     ✅ Security research with proper authorization
-
-    ✅ Improving defensive security postures
 
 STRICTLY PROHIBITED:
 
@@ -198,18 +170,6 @@ Common Issues
 
     Mobile Experience: Desktop browsers recommended for full functionality
 
-Browser Compatibility
-
-    ✅ Google Chrome (Recommended)
-
-    ✅ Mozilla Firefox
-
-    ✅ Microsoft Edge
-
-    ✅ Safari (Limited testing)
-
-    ❌ Internet Explorer (Not supported)
-
 🔄 Updates & Roadmap
 Current Version: v1.0
 
@@ -219,15 +179,12 @@ Current Version: v1.0
 
 Planned Features
 
-    Dark/Light mode toggle
-
     Export functionality for reports
 
     Additional tool integrations
 
     Community command contributions
 
-    Offline PWA capabilities
 
 🤝 Contributing
 
@@ -249,8 +206,6 @@ Use GitHub Issues to report:
 
     Missing tools or techniques
 
-    Security vulnerabilities (responsibly disclosed)
-
     Feature requests and suggestions
 
 📞 Support & Community
@@ -261,7 +216,7 @@ Use GitHub Issues to report:
 
     Issue Tracking: GitHub Issues for technical problems
 
-    Support Development: Buy Me a Coffee
+    Support Development: Buy Me a Coffee - buymeacoffee.com/0x8e8fb
 
 🙏 Acknowledgments
 
@@ -281,4 +236,4 @@ MIT License - See LICENSE file for complete details.
 
 Built with ❤️ by 0x8e8fb for the security community
 
-Remember: With great power comes great responsibility. Always hack ethically.
+# Remember: With great power comes great responsibility. Always hack ethically.
