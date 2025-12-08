@@ -130,35 +130,6 @@ With Your Security Environment
 
     Reference during assessments without disrupting your workflow
 
-With Note-taking Systems
-
-    Export commands to tools like CherryTree, Obsidian, or OneNote
-
-    Use as a quick reference while documenting findings
-
-    Template for standardized engagement reporting
-
-📚 Learning Pathways
-For Beginners
-
-    Start with the Commands Generator to learn basic tool syntax
-
-    Study the Post-Exploitation Cheatsheet for methodology
-
-    Practice with the Image Payload Generator in lab environments
-
-    Understand Pivoting concepts before attempting complex networks
-
-For Advanced Users
-
-    Customize the interface for your specific workflow
-
-    Add your own command templates and techniques
-
-    Integrate with existing toolchains and automation scripts
-
-    Use as a training resource for team members
-
 🐛 Troubleshooting
 Common Issues
 
