@@ -5,10 +5,10 @@
 ![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
 PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools—all without requiring local installation or dependencies.
-🚀 Live Access
 
-Access PenHub immediately at: https://penhub.netlify.app
 
+Access PenHub at: https://penhub.netlify.app
+![Alt text describing the GIF](https://jumpshare.com/embed/AlWGQqXiLqwwj1r7YapQ)
 # 🌟 Core Features
 1. Interactive Commands Generator
 
