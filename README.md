@@ -8,7 +8,8 @@ PenHub is a comprehensive, browser-based penetration testing toolkit designed fo
 
 
 Access PenHub at: https://penhub.netlify.app
-![Alt text describing the GIF](https://jumpshare.com/embed/AlWGQqXiLqwwj1r7YapQ)
+![PenHub Demo](./demo.gif)
+
 # 🌟 Core Features
 1. Interactive Commands Generator
 
