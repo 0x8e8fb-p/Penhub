@@ -86,7 +86,7 @@ Access PenHub at: https://penhub.netlify.app
 
     Network Flow Visualization: Clear representations of pivoting scenarios
 
-🎯 Target Audience
+Target Audience
 
     Penetration Testers: Quick reference for common commands during engagements
 
@@ -123,7 +123,8 @@ STRICTLY PROHIBITED:
     ❌ Violating laws, regulations, or terms of service
 
 Disclaimer: The author assumes no responsibility for misuse of this tool. Always obtain proper written authorization before testing any system. Users are solely responsible for ensuring their activities comply with applicable laws and regulations.
-🧩 Integration with Workflows
+
+Integration with Workflows
 With Your Security Environment
 
     Bookmark PenHub in your browser for quick access during engagements
@@ -132,7 +133,7 @@ With Your Security Environment
 
     Reference during assessments without disrupting your workflow
 
-🐛 Troubleshooting
+Troubleshooting
 Common Issues
 
     JavaScript Not Working: Ensure JavaScript is enabled in your browser settings
@@ -143,7 +144,7 @@ Common Issues
 
     Mobile Experience: Desktop browsers recommended for full functionality
 
-🔄 Updates & Roadmap
+Updates & Roadmap
 Current Version: v1.0
 
     Initial release with core functionality
@@ -156,21 +157,6 @@ Planned Features
 
     Additional tool integrations
 
-    Community command contributions
-
-
-🤝 Contributing
-
-Contributions are welcome! Please:
-
-    Fork the repository
-
-    Create a feature branch
-
-    Submit a pull request with clear description
-
-    Follow existing code and documentation styles
-
 Reporting Issues
 
 Use GitHub Issues to report:
@@ -181,7 +167,7 @@ Use GitHub Issues to report:
 
     Feature requests and suggestions
 
-📞 Support & Community
+Support & Community
 
     Live Application: https://penhub.netlify.app
 
@@ -191,7 +177,7 @@ Use GitHub Issues to report:
 
     Support Development: Buy Me a Coffee - buymeacoffee.com/0x8e8fb
 
-🙏 Acknowledgments
+Acknowledgments
 
     Inspired by various pentesting cheatsheets and community resources
 
