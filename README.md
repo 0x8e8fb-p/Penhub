@@ -4,7 +4,13 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 ![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
+<<<<<<< HEAD
 PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools—all without requiring local installation or dependencies.
+=======
+PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools. all without requiring local installation or dependencies.
+
+🚀 Live Access
+>>>>>>> 6b9faac (domain configuration changes)
 
 
 Access PenHub at: https://penhub.netlify.app
@@ -100,7 +106,7 @@ Target Audience
 
     Security Educators: Teaching tool for penetration testing methodologies
 
-🔒 Legal & Ethical Use
+Legal & Ethical Use
 
 IMPORTANT: PenHub is designed strictly for:
 
@@ -157,6 +163,11 @@ Planned Features
 
     Additional tool integrations
 
+<<<<<<< HEAD
+=======
+    Community command contributions
+
+>>>>>>> 6b9faac (domain configuration changes)
 Reporting Issues
 
 Use GitHub Issues to report:
@@ -167,6 +178,7 @@ Use GitHub Issues to report:
 
     Feature requests and suggestions
 
+<<<<<<< HEAD
 Support & Community
 
     Live Application: https://penhub.netlify.app
@@ -177,6 +189,8 @@ Support & Community
 
     Support Development: Buy Me a Coffee - buymeacoffee.com/0x8e8fb
 
+=======
+>>>>>>> 6b9faac (domain configuration changes)
 Acknowledgments
 
     Inspired by various pentesting cheatsheets and community resources
