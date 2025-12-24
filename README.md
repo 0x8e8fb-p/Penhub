@@ -4,13 +4,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue)
 ![Platform: Web](https://img.shields.io/badge/Platform-Web-brightgreen)
 
-<<<<<<< HEAD
-PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools—all without requiring local installation or dependencies.
-=======
 PenHub is a comprehensive, browser-based penetration testing toolkit designed for security professionals, CTF players, and ethical hackers. This all-in-one web interface provides instant access to essential commands, post-exploitation techniques, payload generators, and network pivoting tools. all without requiring local installation or dependencies.
-
-🚀 Live Access
->>>>>>> 6b9faac (domain configuration changes)
 
 
 Access PenHub at: https://penhub.netlify.app
@@ -92,7 +86,7 @@ Access PenHub at: https://penhub.netlify.app
 
     Network Flow Visualization: Clear representations of pivoting scenarios
 
-Target Audience
+🎯 Target Audience
 
     Penetration Testers: Quick reference for common commands during engagements
 
@@ -106,7 +100,7 @@ Target Audience
 
     Security Educators: Teaching tool for penetration testing methodologies
 
-Legal & Ethical Use
+🔒 Legal & Ethical Use
 
 IMPORTANT: PenHub is designed strictly for:
 
@@ -129,8 +123,7 @@ STRICTLY PROHIBITED:
     ❌ Violating laws, regulations, or terms of service
 
 Disclaimer: The author assumes no responsibility for misuse of this tool. Always obtain proper written authorization before testing any system. Users are solely responsible for ensuring their activities comply with applicable laws and regulations.
-
-Integration with Workflows
+🧩 Integration with Workflows
 With Your Security Environment
 
     Bookmark PenHub in your browser for quick access during engagements
@@ -139,7 +132,7 @@ With Your Security Environment
 
     Reference during assessments without disrupting your workflow
 
-Troubleshooting
+🐛 Troubleshooting
 Common Issues
 
     JavaScript Not Working: Ensure JavaScript is enabled in your browser settings
@@ -150,8 +143,8 @@ Common Issues
 
     Mobile Experience: Desktop browsers recommended for full functionality
 
-Updates & Roadmap
-Current Version: v1.0
+🔄 Updates & Roadmap
+Current Version: v1.1
 
     Initial release with core functionality
 
@@ -163,11 +156,8 @@ Planned Features
 
     Additional tool integrations
 
-<<<<<<< HEAD
-=======
     Community command contributions
 
->>>>>>> 6b9faac (domain configuration changes)
 Reporting Issues
 
 Use GitHub Issues to report:
@@ -178,20 +168,7 @@ Use GitHub Issues to report:
 
     Feature requests and suggestions
 
-<<<<<<< HEAD
-Support & Community
-
-    Live Application: https://penhub.netlify.app
-
-    GitHub Repository: https://github.com/0x8e8fb/penhub
-
-    Issue Tracking: GitHub Issues for technical problems
-
-    Support Development: Buy Me a Coffee - buymeacoffee.com/0x8e8fb
-
-=======
->>>>>>> 6b9faac (domain configuration changes)
-Acknowledgments
+🙏 Acknowledgments
 
     Inspired by various pentesting cheatsheets and community resources
 
