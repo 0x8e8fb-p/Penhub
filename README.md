@@ -11,6 +11,27 @@ PenHub is a comprehensive, browser-based penetration testing toolkit designed fo
 
 ![PenHub Demo](./src/PenHub.gif)
 
+---
+
+## 🚀 Recent Updates (2026-03-03)
+### Newly Implemented
+- **HashKit Suite**:
+    - **Advanced Hash Identifier**: Massive expansion to 100+ patterns spanning database (MySQL/PostgreSQL), networking (Cisco/FortiGate), and filesystem hashes (LUKS/RAR).
+    - **Multi-Algorithm Generator**: Production-grade generator supporting 30+ algorithms (SHA-3, BLAKE2, RIPEMD, etc.) with organized categorized output.
+    - **Encoding Intelligence**: Integrated detection for Base64, Hex, URL-encoded, Binary, and Unicode character sets.
+    - **Bidirectional Processor**: Fully overhauled encoder/decoder with intuitive flow and unlocked output fields for seamless data manipulation.
+- **Advanced Exploitation Repository**:
+    - **Global Payload Expansion**: All vulnerability categories (XSS, SQLi, LFI, RCE, etc.) expanded to 200+ high-quality, production-grade payloads.
+    - **Bulk Export Utility**: New system to copy entire payload categories with a single click for efficient tool-chaining.
+- **Refreshed CTF & Cryptography Toolkit**:
+    - **Fixed Cryptography Engines**: Completely overhauled Vigenère engine ensuring perfect accuracy for encryption and decryption tasks.
+    - **ROT Brute-Force Suite**: Professionally rebranded and optimized Caesar cipher analysis tools for technical accuracy.
+- **Automated Recon Dashboard**:
+    - **Enhanced Command Orchestration**: Refined command generation templates with advanced parameter handling for systematic reconnaissance.
+
+---
+
+
 # 🌟 Core Features
 1. Interactive Commands Generator
 
